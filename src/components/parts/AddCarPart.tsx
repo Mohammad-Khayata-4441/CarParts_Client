@@ -69,12 +69,12 @@ export default function AddPart(props: PropsType) {
 
                             <Controller name='name' rules={{ required: true }} control={control} render={({ field, fieldState }) =>
 
-                                <TextField className='col-span-6' {...field} label='اسم القطعة'></TextField>
+                                <TextField className='col-span-12 md:col-span-6' {...field} label='اسم القطعة'></TextField>
 
                             } />
                             <Controller name='code' rules={{ required: true }} control={control} render={({ field, fieldState }) =>
 
-                                <TextField className='col-span-6' {...field} label='رمز القطعة'></TextField>
+                                <TextField className='col-span-12 md:col-span-6' {...field} label='رمز القطعة'></TextField>
 
                             } />
 
@@ -83,7 +83,7 @@ export default function AddPart(props: PropsType) {
                             <Controller name='categoryId' control={control} render={({ field, fieldState }) =>
 
 
-                                <FormControl className='col-span-6' >
+                                <FormControl className='col-span-12 md:col-span-6' >
                                     <InputLabel id='carCategory'>تصنيف القطعة</InputLabel>
                                     <Select {...field} label='تصنيف القطعة' labelId='carCategory'>
 
@@ -96,7 +96,7 @@ export default function AddPart(props: PropsType) {
                             } />
 
                             <Controller name='brandId' control={control} render={({ field }) =>
-                                <FormControl className='col-span-6' >
+                                <FormControl className='col-span-12 md:col-span-6' >
                                     <InputLabel id='brandid'>الشركة المصنعة</InputLabel>
                                     <Select {...field} label='الشركة المصنعة' labelId='brandid'>
                                         {
@@ -109,7 +109,7 @@ export default function AddPart(props: PropsType) {
 
 
                             <Controller rules={{ required: ' يرجى اختيار السيارات المرتبطة بالقطعة' }} name='carIds' control={control} render={({ field, fieldState }) =>
-                                <FormControl className='col-span-6'   >
+                                <FormControl className='col-span-12 md:col-span-6'   >
                                     <InputLabel id='carType'>السيارات المرتبطة بالقطعة</InputLabel>
                                     <Select   {...field} multiple label='السيارات المرتبطة بالقطعة' labelId='carType'>
 
@@ -125,7 +125,7 @@ export default function AddPart(props: PropsType) {
 
                             <Controller rules={{ required: 'يرجى اختيار المتجر الذي تتوفر فيه القطعة' }} name='storeId' control={control} render={({ field, fieldState }) =>
 
-                                <FormControl className='col-span-6' >
+                                <FormControl className='col-span-12 md:col-span-6' >
                                     <InputLabel id='storId'>إضافة للمستودع</InputLabel>
                                     <Select {...field} label='إضافة للمستودع' labelId='storId' >
 
@@ -142,17 +142,17 @@ export default function AddPart(props: PropsType) {
 
                             <Controller name='orginalPrice' rules={{ required: true }} control={control} render={({ field, fieldState }) =>
 
-                                <TextField type='number' className='col-span-4' {...field} label='السعر الأصلي'></TextField>
+                                <TextField type='number' className='col-span-12 md:col-span-4' {...field} label='السعر الأصلي'></TextField>
 
                             } />
                             <Controller name='sellingPrice' rules={{ required: true }} control={control} render={({ field, fieldState }) =>
 
-                                <TextField type='number' className='col-span-4' {...field} label='سعر المبيع'></TextField>
+                                <TextField type='number' className='col-span-12 md:col-span-4' {...field} label='سعر المبيع'></TextField>
 
                             } />
                             <Controller name='quantity' rules={{ required: true }} control={control} render={({ field, fieldState }) =>
 
-                                <TextField type='number' className='col-span-4' {...field} label='الكمية'></TextField>
+                                <TextField type='number' className='col-span-12 md:col-span-4' {...field} label='الكمية'></TextField>
 
                             } />
 
@@ -163,12 +163,12 @@ export default function AddPart(props: PropsType) {
 
                                     multiline
                                     rows={3}
-                                    className='col-span-6'
+                                    className='col-span-12 md:col-span-6'
                                     {...field} label='الوصف'></TextField>
 
 
                             } />
-                            <div className='col-span-6'>
+                            <div className='col-span-12 md:col-span-6'>
 
 
                                 <Upload name='image' url={imageUrl} onChange={event => {
@@ -179,7 +179,7 @@ export default function AddPart(props: PropsType) {
 
                             </div>
 
-                            <Button className='col-span-12' variant='contained' type='submit' >حفظ القطعة</Button>
+                            <Button className='col-span-12 md:col-span-12' variant='contained' type='submit' >حفظ القطعة</Button>
                         </Box>
 
                     </DialogContent>
