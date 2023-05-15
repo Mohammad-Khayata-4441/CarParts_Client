@@ -104,7 +104,7 @@ export default function FormDialog({ carModifyDto, onCloseDialog }: propsType) {
                 <Add></Add>
             </Button>
 
-            <Dialog open={showModal} >
+            <Dialog  fullWidth open={showModal} >
                 <Box>
 
 
@@ -118,7 +118,7 @@ export default function FormDialog({ carModifyDto, onCloseDialog }: propsType) {
 
                             <IconButton onClick={() => dispatch(CarActions.setCarModal(false))}><Close /></IconButton>
                         </div>
-                        <DialogContent className='flex flex-col min-w-[35rem] p-2 gap-4 '>
+                        <DialogContent className='flex flex-col  p-2 gap-4 '>
 
 
 

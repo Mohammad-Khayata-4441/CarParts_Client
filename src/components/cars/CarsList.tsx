@@ -63,12 +63,10 @@ export default function CarsList(props: propsType) {
                 margin={0}
                 component="div"
               >
-                {car.name}
+                {car.name} ({car.model})
               </Typography>
             </div>
-            <Typography className="text-gray-500" fontSize={14} align="right">
-              {car.model}
-            </Typography>
+    
           </CardContent>
 
           <CardActions className="gap-2">

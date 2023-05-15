@@ -11,6 +11,9 @@ export const customTheme = createTheme({
             default:"#fafafa",
             paper:"#ffffff"
         },
+        text:{
+        },
+     
               
         primary: {
             100: "#d7dffb",
@@ -37,10 +40,12 @@ export const customTheme = createTheme({
             main: "#1e1e1e"
         },
 
+    
+
          
 
     },
-
+ 
 
 
     components:{
@@ -52,7 +57,10 @@ export const customTheme = createTheme({
         MuiPaper:{
             defaultProps:{
                 elevation:0,
-                variant:'outlined'
+                variant:'outlined',
+                sx:{
+                    color:'black'
+                }
                 
             }
         },

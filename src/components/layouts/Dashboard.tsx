@@ -12,8 +12,15 @@ import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { NavLink } from "react-router-dom";
-import { IconButton, Slide, useScrollTrigger } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  IconButton,
+  Slide,
+  useScrollTrigger,
+} from "@mui/material";
 import navLinks from "@/Navigation";
+import { Notifications } from "@mui/icons-material";
 
 const drawerWidth = 280;
 
@@ -51,13 +58,17 @@ export default function ResponsiveDrawer(props: React.PropsWithChildren & any) {
 
   const drawer = (
     <Box>
-      <Toolbar sx={{
-        display:'flex',
-        justifyContent:'center',
-        gap:2
-      }}>
-        <Typography fontWeight={'bold'} fontSize={24}>Auto Parts</Typography>
-        <img alt='logo' width={'56'} src='/Asset 1.svg'></img>
+      <Toolbar
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          gap: 2,
+        }}
+      >
+        <Typography fontWeight={"bold"} fontSize={24}>
+          Auto Parts
+        </Typography>
+        <img alt="logo" width={"56"} src="/Asset 1.svg"></img>
       </Toolbar>
       <List>
         {navLinks.map((item, index) => (
@@ -104,7 +115,6 @@ export default function ResponsiveDrawer(props: React.PropsWithChildren & any) {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <CssBaseline />
       <HideOnScroll {...props}>
         <AppBar
           className="border-b"
@@ -112,22 +122,38 @@ export default function ResponsiveDrawer(props: React.PropsWithChildren & any) {
             background: (teme) => teme.palette.background.paper,
             width: { md: `calc(100% - ${drawerWidth}px)` },
             ml: { md: `${drawerWidth}px` },
-            borderLeft:0
+            borderLeft: 0,
           }}
         >
           <Toolbar>
-            <Box display={"flex"} justifyContent="space-between" width={"100%"}>
-              <IconButton
-                sx={{
-                  display: {
-                    xs: "block",
-                    md: "none",
-                  },
-                }}
-                onClick={() => setMobileOpen(true)}
+            <Box
+              display={"flex"}
+              justifyContent="space-between"
+              alignItems={"center"}
+              width={"100%"}
+            >
+              <Box
+                display={"flex"}
+                justifyContent={"space-between"}
+                width={"100%"}
               >
-                <MenuIcon></MenuIcon>
-              </IconButton>
+                {/*  Mobile Drawer Button */}
+                <IconButton
+                  sx={{ display: { md: "none" } }}
+                  onClick={() => setMobileOpen(true)}
+                >
+                  <MenuIcon></MenuIcon>
+                </IconButton>
+
+                <Box display={"flex"} alignItems={"center"} gap={2}>
+                  <Avatar src="/user.jpg" sx={{objectFit:'contain' }}></Avatar>
+                  <Typography color={(p)=>p.palette.text.primary} fontSize={18}>محمد خياطة</Typography>
+                </Box>
+
+                <Button>
+                  <Notifications />
+                </Button>
+              </Box>
             </Box>
           </Toolbar>
         </AppBar>
@@ -152,7 +178,7 @@ export default function ResponsiveDrawer(props: React.PropsWithChildren & any) {
             display: { xs: "block", md: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
-              width: drawerWidth,
+              width: drawerWidth + 20,
             },
           })}
         >
@@ -186,6 +212,7 @@ export default function ResponsiveDrawer(props: React.PropsWithChildren & any) {
         }}
       >
         <Toolbar />
+        <CssBaseline />
         {props.children}
       </Box>
     </Box>

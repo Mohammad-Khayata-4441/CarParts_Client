@@ -16,7 +16,7 @@ import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { visuallyHidden } from "@mui/utils";
 import { Button, Pagination, TextField } from "@mui/material";
-import { Receipt, Search } from "@mui/icons-material";
+import { Delete, Edit, Receipt, Search } from "@mui/icons-material";
 import { PartItem } from "@/api/Part/GetAllDto";
 import { useQuery, useQueryClient } from "react-query";
 import { BrandItem } from "@/api/Brand/dto";
@@ -62,6 +62,11 @@ const headCells: readonly HeadCell[] = [
     id: "brandId",
     numeric: true,
     label: "العلامة التجارية",
+  },
+  {
+    id: "brandId",
+    numeric: true,
+    label: "اجرائات",
   },
 ];
 
@@ -168,13 +173,19 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
             onClick={() => onGenerateInvoice()}
             startIcon={<Receipt />}
           >
-            توليد فاتورة
+             توليد فاتورة شراء
           </Button>
-          <Tooltip title="Delete">
-            <IconButton>
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
+          <Button
+            className="flex-grow whitespace-nowrap"
+            variant="contained"
+            size="large"
+            color="secondary"
+            onClick={() => onGenerateInvoice()}
+            startIcon={<Receipt />}
+          >
+             توليد فاتورة مبيع
+          </Button>
+      
         </Box>
       ) : (
         <Box>
@@ -336,6 +347,14 @@ export default function PartsTable({
                     <TableCell>{row.orginalPrice}</TableCell>
                     <TableCell>{row.sellingPrice}</TableCell>
                     <TableCell>{getBrandName(row.brandId)}</TableCell>
+                    <TableCell>
+                      <Box>
+                        <IconButton >
+                          <Edit></Edit>
+                        </IconButton>
+                    
+                      </Box>
+                    </TableCell>
                   </TableRow>
                 );
               })}
