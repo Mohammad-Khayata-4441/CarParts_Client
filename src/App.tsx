@@ -24,7 +24,6 @@ import { CountryApi } from './api/Country';
 import { SERVER_URL } from '../app.config';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers';
-
 const stylisPlugins = [prefixer];
 const queryClient = new QueryClient({
   defaultOptions: {
