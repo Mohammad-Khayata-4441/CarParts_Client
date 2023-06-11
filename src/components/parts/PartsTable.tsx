@@ -99,9 +99,9 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   return (
     <TableHead>
       <TableRow>
-        {headCells.map((headCell) => (
+        {headCells.map((headCell,i) => (
           <TableCell
-            key={headCell.id}
+            key={i}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
@@ -320,7 +320,7 @@ export default function PartsTable({
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={row.id}
+                    key={index}
                     selected={isItemSelected}
                   >
                     <TableCell component="th" id={labelId} scope="row">

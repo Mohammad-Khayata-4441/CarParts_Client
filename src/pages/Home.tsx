@@ -1,20 +1,41 @@
-import { Button } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import { PlusOne, Refresh } from "@mui/icons-material";
+import { Button, Paper } from "@mui/material";
+import React, { useCallback, useEffect, useState } from "react";
+
+const Counter = () => {
+  const [counter, setCounter] = useState(0);
+
+  useEffect(() => {
+    console.log("effect");
+  });
+
+  const resetCounter = () => {
+    setCounter(0);
+  };
+  return (
+    <Paper sx={{ p: 2 }}>
+      <h1>Home Page {counter}</h1>
+      <Button
+        onClick={() => {
+            setCounter((o) => o + 1);
+        }}
+      >
+        <PlusOne></PlusOne>
+      </Button>
+      <Button onClick={() => resetCounter()}>
+        <Refresh></Refresh>
+      </Button>
+    </Paper>
+  );
+};
 
 export default function Home() {
 
-  console.log('render')
-
-  useEffect(() => {
-    console.log('render effect')
-  })
-
-  const [counter, setCounter] = useState(0);
   return (
-
     <div>
-      <h1>Home Page {counter}</h1>
-      <Button onClick={() => setCounter((o) => o + 1)}>PLUS</Button>
+      <div className="grid grid-cols-2 container mx-auto max-w-screen-lg gap-4">
+ 
+      </div>
     </div>
-  )
+  );
 }

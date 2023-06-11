@@ -1,57 +1,52 @@
 import { Home, ViewCompact, Inventory, ImportExport, AttachMoney, Group, Settings, Google, Web, } from '@mui/icons-material'
 import DirectionsCarFilledIcon from '@mui/icons-material/DirectionsCarFilled';
-
+import {HiHome , HiFlag} from 'react-icons/hi2'
+import {IoCarSport , IoSettings} from 'react-icons/io5'
+import {GiAutoRepair} from 'react-icons/Gi'
+import {FaReceipt, FaUsers } from 'react-icons/fa'
+import {SiMercedes } from 'react-icons/si'
 export default [
     {
         text: "الرئيسية",
         path: "/",
-        icon: Home 
+        icon: HiHome 
     },
     {
         text: "السيارات",
         path: "/cars",
-        icon: DirectionsCarFilledIcon 
+        icon: IoCarSport 
     },
     {
         text: "القطع",
         path: "/products",
-        icon: ViewCompact,
+        icon: GiAutoRepair,
         params:"?PageSize=5&PageNumber=1",
     },
     {
         text: "الفواتير",
         path: "/invoces",
-        icon: ImportExport 
+        icon: FaReceipt 
     },
-    {
-        text: "المحاسبة",
-        path: "/accounting",
-        icon: AttachMoney 
-    },
+
     {
         text: "العلامات التجارية",
         path: "/brands",
-        icon: Google 
+        icon: SiMercedes 
     },
     {
         text: "الدول المصنعة",
         path: "/countries",
-        icon: Web 
+        icon: HiFlag 
     },
     {
         text: "الاعدادات",
         path: "/settings",
-        icon: Settings 
+        icon: IoSettings 
     },
     {
-        text: "المستودعات",
-        path: "/inventories",
-        icon: Inventory 
-    },
-    {
-        text: "زبائن",
+        text: "العملاء",
         path: "/clients",
-        icon: Inventory 
+        icon: FaUsers 
     },
 
 

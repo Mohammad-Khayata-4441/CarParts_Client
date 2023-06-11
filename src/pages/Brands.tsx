@@ -17,7 +17,7 @@ export default function Brands() {
           {brands.map((b: BrandItem) => {
             return (
 
-              <Card key={b.id} className='p-4 flex items-center justify-center relative' sx={{ borderRadius: '0.4rem' }} elevation={5}>
+              <Card key={b.id} className='p-4 flex items-center justify-center relative' sx={{ borderRadius: '0.4rem' }} >
                 <img width={150} height={150} className='w-full h-full object-contain' src={`/brands/${b.name}.png`} alt="" />
 
                 <Box sx={{ transition: '0.5s' }} className="absolute h-full w-full brand-info bg-white flex justify-center items-center text-2xl bg-opacity-70 opacity-0 hover:opacity-100 backdrop-blur-sm ">

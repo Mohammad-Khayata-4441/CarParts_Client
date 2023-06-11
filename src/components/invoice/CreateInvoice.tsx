@@ -1,4 +1,4 @@
-import { CustomerItem } from "@/api/Customer/GetAll";
+import { ClientItem } from "@/api/Client/GetAll";
 import { InvoiceApi } from "@/api/Invoice";
 import { AddInvoiceDto } from "@/api/Invoice/AddInvoiceDto";
 import { GetAllParts, PartItem } from "@/api/Part/GetAllDto";
@@ -30,13 +30,12 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useEffect } from "react";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
-import { z } from "zod";
+import  { useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
 interface Props {
   is: boolean;
   onClose: (is: boolean) => void;
-  customers: CustomerItem[];
+  customers: ClientItem[];
   parts: PartItem[];
   onSubmit: (data: AddInvoiceDto) => void;
 }

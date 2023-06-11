@@ -1,5 +1,4 @@
 import { axiosIns } from "@/libs/axios";
-import axios from "axios";
 import { AddInvoiceDto } from "./AddInvoiceDto";
 
 enum InvoiceEndPoints {

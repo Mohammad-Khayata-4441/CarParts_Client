@@ -30,8 +30,8 @@ import { BrandApi } from "@/api/Brand";
 import PartsFilter from "@/components/parts/PartsFilter";
 import { Refresh } from "@mui/icons-material";
 import CreateInvoice from "@/components/invoice/CreateInvoice";
-import { CustomerItem } from "@/api/Customer/GetAll";
-import { CustomerApi } from "@/api/Customer";
+import { ClientItem } from "@/api/Client/GetAll";
+import { ClientApi } from "@/api/Client";
 import { useParams, useSearchParams } from "react-router-dom";
 
 function Products() {
@@ -41,7 +41,7 @@ function Products() {
   const [brandsList, setBrandsList] = useState<BrandItem[]>([]);
   const [parts, setParts] = useState<PartItem[]>([]);
 
-  const [customers, setCustomers] = useState<CustomerItem[]>([]);
+  const [customers, setCustomers] = useState<ClientItem[]>([]);
   const [partsToInvoice, setPartsToInvoice] = useState<PartItem[]>([]);
   const [invoiceDialog, setInvoiceDialog] = useState(false);
   const [total, setTotal] = useState(0);
@@ -66,7 +66,7 @@ function Products() {
     }
   );
 
-  const {invalidateQueries} = useQueryClient()
+  const { invalidateQueries } = useQueryClient();
 
   const carQuery = useQuery("car", CarApi.fetchCars, {
     onSuccess: (cars) => setCarsList(cars),
@@ -94,7 +94,7 @@ function Products() {
     },
   });
   const customerQuery = useQuery({
-    queryFn: CustomerApi.fetchCustomers,
+    queryFn: ClientApi.fetchClients,
     queryKey: "customer",
     onSuccess: (data) => {
       setCustomers(data);
@@ -119,7 +119,7 @@ function Products() {
 
   return (
     <div>
-      <Card className="mb-4" >
+      <Card className="mb-4">
         <div className="flex flex-col p-4 gap-4 ">
           <div className="flex justify-between">
             <Typography variant="h2" fontWeight={"bold"} fontSize={24}>
@@ -128,11 +128,10 @@ function Products() {
             <div className="flex gap-4">
               <Button
                 onClick={() => {
-                 
                   setSearchParams({
-                    PageSize:'5',
-                    PageNumber:'1'
-                  })
+                    PageSize: "5",
+                    PageNumber: "1",
+                  });
                 }}
                 endIcon={<Refresh />}
               >
@@ -169,7 +168,7 @@ function Products() {
       </Card>
       <CreateInvoice
         onSubmit={() => {
-          invalidateQueries('part')
+          invalidateQueries("part");
         }}
         parts={partsToInvoice}
         customers={customers}

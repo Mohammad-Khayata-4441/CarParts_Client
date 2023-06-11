@@ -24,7 +24,8 @@ const requestHandler = (request: AxiosRequestConfig) => {
     //  console.log(request)
     //     if (request.headers)
     //         request.headers['Authorization'] = `Bearer ${GetAccessToken()}`;
-    return request;
+
+    // return request;
 };
 const responseHandler = (response: AxiosResponse) => {
 
@@ -43,8 +44,8 @@ const axiosIns = axios.create({
     }
 });
 
-axiosIns.interceptors.request.use(requestHandler)
-axiosIns.interceptors.response.use(responseHandler, errorHandler)
+// axiosIns.interceptors.request.use(requestHandler)
+// axiosIns.interceptors.response.use(responseHandler, errorHandler)
 
 
 

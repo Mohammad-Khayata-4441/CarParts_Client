@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
 
 import "react-toastify/dist/ReactToastify.css";
-import AddCar from "@/components/cars/AddCar";
+import CarForm from "@/components/cars/CarForm";
 import CarsList from "@/components/cars/CarsList";
 import { GetAllCar } from "@/api/Car/dto";
 import {
@@ -73,10 +73,10 @@ export default function Cars() {
 
  
 
-          <AddCar
+          <CarForm
             carModifyDto={modifyItem}
             onCloseDialog={() => setModifyItem(null)}
-          ></AddCar>
+          ></CarForm>
         </div>
       </Card>
 

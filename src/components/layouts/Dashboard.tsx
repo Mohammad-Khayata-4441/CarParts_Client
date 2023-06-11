@@ -97,7 +97,7 @@ export default function ResponsiveDrawer(props: React.PropsWithChildren & any) {
                         color: isActive ? "white" : palette.grey["700"],
                       })}
                     >
-                      <item.icon />
+                      <item.icon size={'1.4rem'} />
                     </ListItemIcon>
                     <ListItemText primary={item.text} />
                   </ListItemButton>
