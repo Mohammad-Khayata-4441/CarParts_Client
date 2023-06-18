@@ -1,6 +1,6 @@
 import { ClientItem } from "@/api/Client/GetAll";
-import { InvoiceApi } from "@/api/Invoice";
-import { AddInvoiceDto } from "@/api/Invoice/AddInvoiceDto";
+import { InvoiceApi } from "@/api/components";
+import { AddInvoiceDto } from "@/api/components/AddInvoiceDto";
 import { GetAllParts, PartItem } from "@/api/Part/GetAllDto";
 import { Add, Close } from "@mui/icons-material";
 import {

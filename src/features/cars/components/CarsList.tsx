@@ -5,12 +5,8 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import {
-  Box,
   Button,
-  ButtonGroup,
-  CardActionArea,
   CardActions,
-  IconButton,
 } from "@mui/material";
 import { SERVER_URL } from "@/../app.config";
 import { useSelector } from "react-redux";
@@ -78,7 +74,7 @@ export default function CarsList(props: propsType) {
               }}
             >
               <Button variant="contained" fullWidth>
-                عرض القطع (20)
+                عرض القطع ({car.totalParts})
               </Button>
             </Link>
             <Button variant="contained" onClick={() => props.onDetails(car)}>

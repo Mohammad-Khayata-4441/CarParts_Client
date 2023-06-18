@@ -5,13 +5,13 @@ import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import { useQuery, useQueryClient } from "react-query";
+import { APP_CURRENCY } from '~config'
 import { ClientApi } from "@/api/Client";
 import {
   Card,
   IconButton,
   Paper,
   TableBody,
-  CardHeader,
   Typography,
   FormControl,
   InputLabel,
@@ -22,7 +22,7 @@ import {
 } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 import { FaBuilding, FaStore, FaUser } from "react-icons/fa";
-import ClientForm from "@/components/clients/ClientForm";
+import ClientForm from "@/features/clients/components/ClientForm";
 import { ClientItem } from "@/api/Client/GetAll";
 
 function Clients() {
@@ -56,13 +56,13 @@ function Clients() {
               className="flex-grow lg:grow-0 basis-full lg:basis-[300px]"
             >
               <InputLabel id="brand-id-label">نوع العميل</InputLabel>
-              <Select labelId="brand-id-label" label="نوع العميل">
+              <Select labelId="brand-id-label" label="نوع العميل" value={''}>
                 <MenuItem value={1}>متاجر</MenuItem>
                 <MenuItem value={0}>زبائن</MenuItem>
               </Select>
             </FormControl>
 
-            <Button onClick={() => setClientModal(true)}>إضافة عميل</Button>
+            <Button variant="contained" onClick={() => setClientModal(true)}>إضافة عميل</Button>
           </Box>
         </Card>
 
@@ -71,10 +71,10 @@ function Clients() {
             <TableHead>
               <TableRow>
                 <TableCell align="left">اسم الزبون</TableCell>
+                <TableCell align="left">صافي الحساب</TableCell>
                 <TableCell align="right">رقم الهاتف</TableCell>
                 <TableCell align="right">البريد الالكتروني</TableCell>
                 <TableCell align="right">العنوان</TableCell>
-                <TableCell align="right">عدد الفواتير</TableCell>
                 <TableCell align="right">إجرائات</TableCell>
               </TableRow>
             </TableHead>
@@ -92,10 +92,10 @@ function Clients() {
                         <span className="mr-4">{row.name}</span>
                       </div>
                     </TableCell>
-                    <TableCell align="right">{row.id}</TableCell>
-                    <TableCell align="right">{row.id}</TableCell>
-                    <TableCell align="right">{row.id}</TableCell>
-                    <TableCell align="right">{row.id}</TableCell>
+                    <TableCell sx={{ color: row.totalAccount >= 0 ? "green" : "red" }}>{row.totalAccount} {APP_CURRENCY}</TableCell>
+                    <TableCell align="right">{row.phoneNumber}</TableCell>
+                    <TableCell align="right">{row.email}</TableCell>
+                    <TableCell align="right">{row.address}</TableCell>
                     <TableCell align="right">
                       <IconButton onClick={() => setClientToModify(row)}>
                         <MoreVert />

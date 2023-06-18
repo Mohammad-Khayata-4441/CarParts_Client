@@ -5,6 +5,7 @@ export class AddCategoryDto {
 }
 
 export class CategoryItem {
+    totalParts = 0;
     name = '';
     image = '';
     id = '';

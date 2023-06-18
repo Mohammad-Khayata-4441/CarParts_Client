@@ -15,5 +15,6 @@ export class GetAllCar {
     image = '';
     brandId = '';
     carCategoryId? = '';
+    totalParts = 0;
 }
 

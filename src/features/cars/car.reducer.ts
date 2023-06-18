@@ -1,7 +1,4 @@
-import { AnyAction, PayloadAction, createAsyncThunk, createSlice, combineReducers } from "@reduxjs/toolkit";
-import { axiosIns } from "../../libs/axios";
-import { CarAPI } from "~/api/Car";
-import { serialize } from "object-to-formdata";
+import {  PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { GetAllCar } from "@/api/Car/dto";
 
 
@@ -23,7 +20,6 @@ const carSlice = createSlice({
         setCarsList: (state: carState, action: PayloadAction<GetAllCar[]>) => {
             state.cars = action.payload
         },
-
 
 
         setCarModal: (state: carState, action: PayloadAction<boolean>) => {

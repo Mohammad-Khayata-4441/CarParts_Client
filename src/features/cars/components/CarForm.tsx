@@ -16,15 +16,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store";
 import { BrandItem } from "@/api/Brand/dto";
 import { useState, useEffect, useMemo } from "react";
-import Upload from "../Upload";
+import Upload from "../../../components/Upload";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import { Add, Close } from "@mui/icons-material";
-import { CarActions } from "@/store/cars";
+import { CarActions } from "@/features/cars/car.reducer";
 import { useMutation, useQueryClient } from "react-query";
 import { CarApi } from "@/api/Car";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { useServerFile } from "@/hooks/useServerFile";
 
 interface propsType {
   carModifyDto: GetAllCar | null;
@@ -95,7 +96,7 @@ export default function FormDialog({ carModifyDto, onCloseDialog }: propsType) {
         name: carModifyDto.name,
         image: null,
       });
-      setImageUrl(carModifyDto.image);
+      setImageUrl(useServerFile(carModifyDto.image));
     }
   }, [carModifyDto]);
 
@@ -109,7 +110,7 @@ export default function FormDialog({ carModifyDto, onCloseDialog }: propsType) {
   return (
     <div>
       <Button
-        variant="text"
+        variant="contained"
         onClick={() => dispatch(CarActions.setCarModal(true))}
       >
         إضافة سيارة
@@ -189,24 +190,26 @@ export default function FormDialog({ carModifyDto, onCloseDialog }: propsType) {
                 )}
               />
               <div>
-                <Upload
-                  url={imageUrl}
-                  onChange={({ file, src }) => {
-                    setValue("image", file), setImageUrl(src);
-                  }}
-                  label="صورة السيارة"
-                  name="image"
-                />
+                <Controller control={control} name="image" render={({ field }) =>
+                  <Upload
+                    {...field}
+                    onChangeUrl={setImageUrl}
+                    url={imageUrl}
+                    label="صورة السيارة"
+                    name="image"
+                  />
+                } />
+           
               </div>
             </DialogContent>
             <DialogActions sx={{ justifyContent: "space-between" }}>
               <Box gap={2} display="flex">
                 <Button variant="contained" type="submit">
-                 {
-                    isModify?
-                    ' إضافة السيارة'
-                    :'تعديل السيارة'
-                 }
+                  {
+                    isModify ?
+                      ' إضافة السيارة'
+                      : 'تعديل السيارة'
+                  }
                 </Button>
                 <Button onClick={() => dispatch(CarActions.setCarModal(false))}>
                   الغاء

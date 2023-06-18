@@ -40,6 +40,7 @@ export default defineConfig({
     alias: [
       { find: "~", replacement: path.resolve(__dirname, "src") },
       { find: "@", replacement: path.resolve(__dirname, "src") },
+      { find: "~config", replacement: path.resolve(__dirname, "./app.config.ts") },
     ],
   },
   css: {

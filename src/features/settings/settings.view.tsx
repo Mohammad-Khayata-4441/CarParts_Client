@@ -4,7 +4,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { Card, CardHeader } from '@mui/material';
-
+import CategoriesTab from './components/categoriesTab';
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -23,8 +23,8 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+        <Box  sx={{mt:2}}>
+          {children}
         </Box>
       )}
     </div>
@@ -66,7 +66,7 @@ export default function BasicTabs() {
 
 
       <TabPanel value={value} index={0}>
-        
+        <CategoriesTab></CategoriesTab>
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two

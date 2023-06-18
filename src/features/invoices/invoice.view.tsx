@@ -1,6 +1,6 @@
 import { ClientApi } from "@/api/Client";
 import { ClientItem } from "@/api/Client/GetAll";
-import CreateInvoice from "@/components/invoice/CreateInvoice";
+import CreateInvoice from "@/features/invoices/invoice/CreateInvoice";
 import { Button } from "@mui/material";
 import React, { useRef, useState } from "react";
 import { useQuery } from "react-query";

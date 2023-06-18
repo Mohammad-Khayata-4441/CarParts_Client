@@ -1,4 +1,6 @@
-import PartsTable from "@/components/parts/PartsTable";
+import PartsTable from "./components/PartsTable";
+import PartsFilter from "./components/PartsFilter";
+
 import { PartApi } from "@/api/Part";
 import { useQuery, useQueryClient } from "react-query";
 import {
@@ -7,14 +9,9 @@ import {
   AccordionSummary,
   Button,
   Card,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
   Typography,
 } from "@mui/material";
-import AddCarPart from "@/components/parts/AddCarPart";
+import AddCarPart from "@/features/parts/components/AddCarPart";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { CarApi } from "@/api/Car";
@@ -27,12 +24,12 @@ import { CategoryItem } from "@/api/Category/dto";
 import { InventoryItem } from "@/api/Inventory/dto";
 import { GetAllPartsParams, PartItem } from "@/api/Part/GetAllDto";
 import { BrandApi } from "@/api/Brand";
-import PartsFilter from "@/components/parts/PartsFilter";
 import { Refresh } from "@mui/icons-material";
-import CreateInvoice from "@/components/invoice/CreateInvoice";
+import CreateInvoice from "@/features/invoices/invoice/CreateInvoice";
 import { ClientItem } from "@/api/Client/GetAll";
 import { ClientApi } from "@/api/Client";
 import { useParams, useSearchParams } from "react-router-dom";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 function Products() {
   const [carsList, setCarsList] = useState<GetAllCar[]>([]);
@@ -56,7 +53,7 @@ function Products() {
   const brands = useSelector<RootState, BrandItem[]>((s) => s.brand.brands);
 
   const { refetch } = useQuery(
-    ["part", params.PageNumber],
+    ["part"],
     () => PartApi.getParts(params),
     {
       onSuccess(data) {
@@ -100,6 +97,7 @@ function Products() {
       setCustomers(data);
     },
   });
+  const [expanded, setExpanded] = useState(true);
 
   const onPaginationChage = (PageNumber: number, PageSize: number) => {
     searchParams.set("PageSize", PageSize.toString());
@@ -145,7 +143,7 @@ function Products() {
               ></AddCarPart>
             </div>
           </div>
-          {/* {JSON.stringify(params)} */}
+
           <PartsFilter
             {...{
               brandsList,
@@ -164,6 +162,7 @@ function Products() {
               }
             }}
           />
+
         </div>
       </Card>
       <CreateInvoice

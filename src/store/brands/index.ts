@@ -1,6 +1,4 @@
-import { createAsyncThunk, createSlice, AnyAction, PayloadAction } from '@reduxjs/toolkit';
-import { axiosIns } from '@/libs/axios';
-import { BrandController } from '@/api/Brand';
+import {  createSlice,  PayloadAction } from '@reduxjs/toolkit';
 import { BrandItem } from '@/api/Brand/dto';
 export type BrandsState = {
     brands: BrandItem[]
@@ -20,7 +18,6 @@ const brandSlice = createSlice({
     reducers: {
         SetCars: (state: BrandsState, action: PayloadAction<BrandItem[]>) => { state.brands = [...action.payload] },
     },
-
 
 
 })

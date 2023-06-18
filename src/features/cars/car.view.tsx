@@ -1,10 +1,10 @@
-import React, {  useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../store";
+import { AppDispatch, RootState } from "../../store";
 
 import "react-toastify/dist/ReactToastify.css";
-import CarForm from "@/components/cars/CarForm";
-import CarsList from "@/components/cars/CarsList";
+import CarForm from "@/features/cars/components/CarForm";
+import CarsList from "@/features/cars/components/CarsList";
 import { GetAllCar } from "@/api/Car/dto";
 import {
   Autocomplete,
@@ -19,8 +19,16 @@ import {
 import { CountryItem } from "@/api/Country/dto";
 import { CarApi } from "@/api/Car";
 import { useQuery } from "react-query";
-import { CarActions } from "@/store/cars";
+import { CarActions } from "@/features/cars/car.reducer";
 export default function Cars() {
+
+  const [filter, setFilter] = useState({
+    search: '',
+    countryId: '',
+    brandId: '',
+  })
+
+
   const countries = useSelector<RootState, CountryItem[]>(
     (state) => state.country.countries
   );
@@ -37,21 +45,29 @@ export default function Cars() {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const cars = useSelector<RootState, GetAllCar[]>((state) => state.car.cars);
+const cars = useSelector<RootState, GetAllCar[]>((state) => state.car.cars);
+
+const filterdCars = useMemo(() => cars.filter(c => (
+  (c.brandId === filter.brandId || !filter.brandId) &&
+  ((c.name.toLowerCase().includes(filter.search.toLocaleLowerCase())) || !filter.search)
+
+)), [JSON.stringify(filter), cars])
+
+
   return (
     <div>
-      <Card  className="p-4" elevation={0}>
+      <Card className="p-4" elevation={0}>
         <div className="flex items-center gap-5 flex-wrap">
           <div className="basis-full">
             <Typography fontSize={24} fontWeight={'bold'} >
               السيارات
             </Typography>
           </div>
-          <TextField className="flex-grow lg:grow-0 basis-full lg:basis-[300px]" size="small" label="ابحث عن سيارة معينة" />
+          <TextField name='countryId' onChange={(e) => setFilter((ol) => ({ ...ol, search: e.target.value }))} value={filter.search} className="flex-grow lg:grow-0 basis-full lg:basis-[300px]" size="small" label="ابحث عن سيارة معينة" />
 
-          <FormControl  size="small" className="flex-grow lg:grow-0 basis-full lg:basis-[300px]">
+          <FormControl size="small" className="flex-grow lg:grow-0 basis-full lg:basis-[300px]">
             <InputLabel id="brand-id-label">الدولة</InputLabel>
-            <Select value={''} labelId="brand-id-label" label="الدولة">
+            <Select name='countryId' onChange={(e) => setFilter((ol) => ({ ...ol, countryId: e.target.value }))} value={filter.countryId} labelId="brand-id-label" label="الدولة">
               {countries.map((c) => (
                 <MenuItem key={c.id} value={c.id}>
                   {c.name}
@@ -62,7 +78,7 @@ export default function Cars() {
 
           <FormControl size="small" className="flex-grow lg:grow-0 basis-full lg:basis-[300px]">
             <InputLabel id="brand-id-label">الشركة المصنعة</InputLabel>
-            <Select value={''} labelId="brand-id-label" label="الشركة المصنعة">
+            <Select name='countryId' onChange={(e) => setFilter((ol) => ({ ...ol, brandId: e.target.value }))} value={filter.brandId} labelId="brand-id-label" label="الشركة المصنعة">
               {brands.map((b) => (
                 <MenuItem key={b.id} value={b.id}>
                   {b.name}
@@ -71,12 +87,11 @@ export default function Cars() {
             </Select>
           </FormControl>
 
- 
-
           <CarForm
             carModifyDto={modifyItem}
             onCloseDialog={() => setModifyItem(null)}
           ></CarForm>
+
         </div>
       </Card>
 
@@ -85,7 +100,7 @@ export default function Cars() {
           onDetails={(car) => {
             setModifyItem(car);
           }}
-          carsList={cars}
+          carsList={filterdCars}
         ></CarsList>
       </div>
     </div>

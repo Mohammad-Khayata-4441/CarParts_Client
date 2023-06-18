@@ -358,11 +358,6 @@ export default function PartsTable({
                   </TableRow>
                 );
               })}
-              {emptyRows > 0 && (
-                <TableRow>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
             </TableBody>
           </Table>
         </TableContainer>

@@ -84,9 +84,10 @@ export default function ClientForm({
           <Box p={2} gap={2} display={"flex"} flexDirection={"column"}>
             <Controller
               name="name"
+              rules={{required:'اسم العميل مطلوب'}}
               control={control}
-              render={({ field }) => (
-                <TextField {...field} label="اسم العميل" />
+              render={({ field , fieldState}) => (
+                <TextField error={fieldState.invalid} helperText={fieldState.error?.message} {...field} label="اسم العميل" />
               )}
             />
 
@@ -95,6 +96,22 @@ export default function ClientForm({
               control={control}
               render={({ field }) => (
                 <TextField {...field} type="number" label="رقم الهاتف" />
+              )}
+            />
+            <Controller
+              name="email"
+
+              control={control}
+              render={({ field }) => (
+                <TextField helperText='اختياري' {...field}  label="البريد الإلكتروني" />
+              )}
+            />
+            <Controller
+              name="address"
+
+              control={control}
+              render={({ field }) => (
+                <TextField helperText='اختياري'  {...field}  label="العنوان" />
               )}
             />
             <Controller
@@ -134,7 +151,7 @@ export default function ClientForm({
             >
               الغاء
             </Button>
-            <Button type="submit">حفظ</Button>
+            <Button type="submit" variant="contained">حفظ</Button>
             {isModify && (
               <Button color="error" onClick={() => setDeleteDialog(true)}>
                 حذف

@@ -9,8 +9,8 @@ import { Button, Dialog, DialogContent, DialogTitle, FormControl, FormLabel, Ico
 import { Box } from '@mui/system'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { useMutation } from 'react-query'
-import Upload from '../Upload';
+import { useMutation, useQueries, useQueryClient } from 'react-query'
+import Upload from '@/components/Upload';
 import { toast } from 'react-toastify'
 
 interface PropsType {
@@ -20,12 +20,12 @@ interface PropsType {
     categories: CategoryItem[]
 }
 export default function AddPart(props: PropsType) {
-    const { control, handleSubmit, setValue, reset ,watch } = useForm<AddPartDTO>({
+    const { control, handleSubmit } = useForm<AddPartDTO>({
         defaultValues: { ... new AddPartDTO() },
 
     })
 
-    const cars = watch('carIds')
+    const partsQuery = useQueryClient()
 
     const [imageUrl, setImageUrl] = useState('')
 
@@ -33,19 +33,20 @@ export default function AddPart(props: PropsType) {
 
     const mutation = useMutation('carPart', {
         mutationFn: PartApi.addPart,
-        onSuccess: () =>{
-            toast(`تمت إضافة القطعة بنجاح`,{
+        onSuccess: () => {
+            toast(`تمت إضافة القطعة بنجاح`, {
                 theme: 'light',
                 type: 'success'
             })
-            // reset();
-            setOpen(false)
+
+            setOpen(false);
+            partsQuery.invalidateQueries('part')
         }
     })
 
     const onSubmit = (values: AddPartDTO) => {
-        console.log(values)
-        mutation.mutate(values)
+        mutation.mutate(values);
+        
     }
 
     return (
@@ -169,14 +170,8 @@ export default function AddPart(props: PropsType) {
 
                             } />
                             <div className='col-span-12 md:col-span-6'>
-
-
-                                <Upload name='image' url={imageUrl} onChange={event => {
-                                    console.log(event)
-                                    setValue('image', event.file);
-                                    setImageUrl(event.src)
-                                }}></Upload>
-
+                                <Controller control={control} name='image' render={({ field, fieldState }) => <Upload  {...field} onChangeUrl={(e) => { setImageUrl(e) }} url={imageUrl}  ></Upload>}
+                                />
                             </div>
 
                             <Button className='col-span-12 md:col-span-12' variant='contained' type='submit' >حفظ القطعة</Button>

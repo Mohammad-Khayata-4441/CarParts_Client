@@ -26,6 +26,7 @@ import { CountryApi } from './api/Country';
 import { SERVER_URL } from '../app.config';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers';
+import FeedBackProvider from './components/FeedBackProvider';
 const stylisPlugins = [prefixer];
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -77,12 +78,13 @@ function App() {
               <BrowserRouter>
 
 
-
                 <Suspense fallback={'Loading Some Thing'}>
 
-                  <main className='tw-block'>
-                    <Router />
 
+                  <main className='tw-block'>
+                    <FeedBackProvider >
+                      <Router />
+                    </FeedBackProvider>
                   </main>
                 </Suspense>
               </BrowserRouter>
@@ -96,7 +98,7 @@ function App() {
       <div className="fixed bottom-4 right-4  z-[10000]  text-white">
         <a href={`${SERVER_URL}/swagger/index.html`} target='_blank'>Swagger Api</a>
       </div>
-    </div>
+    </div >
   );
 }
 

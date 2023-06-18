@@ -29,7 +29,10 @@
       ],
       "~/*": [
         "./src/*"
-      ]
+      ],
+      "~config": [
+        "./app.config.ts"
+      ],
     }
   },
   "include": [
