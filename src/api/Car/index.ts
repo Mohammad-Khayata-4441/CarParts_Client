@@ -1,4 +1,4 @@
-import { axiosIns } from "@/libs/axios";
+import { axiosIns } from "@/app/config/axios/axios";
 import { AddCarDTO, GetAllCar } from "../Car/dto";
 import { serialize } from "object-to-formdata";
 

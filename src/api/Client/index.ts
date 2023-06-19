@@ -1,4 +1,4 @@
-import { axiosIns } from "@/libs/axios";
+import { axiosIns } from "@/app/config/axios/axios";
 import { ClientItem } from "./GetAll";
 import { CreateClient } from "./CreateClient";
 

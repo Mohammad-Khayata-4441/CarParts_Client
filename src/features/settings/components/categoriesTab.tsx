@@ -9,8 +9,8 @@ import AddPartCategory from './forms/addPartCategory'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '@/store'
 import { SettingsActions } from '../settings.reducer'
-import { useServerFile } from '@/hooks/useServerFile'
-import { ConfirmContext } from '@/components/FeedBackProvider'
+import { useServerFile } from '@/shared/hooks/useServerFile'
+import { ConfirmContext } from '@/shared/components/FeedBackProvider'
 
 export default function categoriesTab() {
 

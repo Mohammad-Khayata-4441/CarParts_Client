@@ -1,4 +1,4 @@
-import { axiosIns } from "@/libs/axios"
+import { axiosIns } from "@/app/config/axios/axios"
 
 export enum COUNTRY_API {
     Base = 'Country'

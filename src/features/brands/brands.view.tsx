@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { useSelector } from 'react-redux'
 import { Box, Button, Card } from '@mui/material'
-import { RootState } from '../store'
+import { RootState } from '../../store'
 import { BrandItem } from '@/api/Brand/dto'
 import { useNavigate } from 'react-router-dom'
 

@@ -1,20 +1,19 @@
 import React, { Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import Dashboard from '@/components/layouts/Dashboard'
-import FullScreen from '@/components/layouts/FullScreen'
+import Dashboard from '@/app/layouts/Dashboard'
+import FullScreen from '@/app/layouts/FullScreen'
 
-const Home = React.lazy(() => import('../pages/Home'))
-const Login = React.lazy(() => import('../pages/Login'))
-const Brands = React.lazy(() => import('../pages/Brands'))
-const Cars = React.lazy(() => import('../features/cars/car.view'))
-const Parts = React.lazy(() => import('../features/parts/parts.view'))
-const Invoces = React.lazy(() => import('../features/invoices/invoice.view'))
-const Accounting = React.lazy(() => import('../pages/Accounting'))
-const Inventories = React.lazy(() => import('../pages/Inventories'))
+const Home = React.lazy(() => import('@/features/home/home.view'))
+const Login = React.lazy(() => import('@/features/auth/login.view'))
+const Brands = React.lazy(() => import('@/features/brands/brands.view'))
+const Cars = React.lazy(() => import('@/features/cars/car.view'))
+const Parts = React.lazy(() => import('@/features/parts/parts.view'))
+const Invoces = React.lazy(() => import('@/features/invoices/invoice.view'))
 const Clients = React.lazy(() => import('@/features/clients/clients.view'))
 const Settings = React.lazy(() => import('@/features/settings/settings.view'))
+const Countries = React.lazy(() => import('@/features/countries/countries.view'));
+const Inventories = React.lazy(() => import('@/features/auth/login.view'))
 
-const Countries = React.lazy(() => import('../pages/Countries'));
 function Router() {
     const routes = [
         {
@@ -46,11 +45,6 @@ function Router() {
             layout: Dashboard,
             name: Invoces,
             path: '/invoces'
-        },
-        {
-            layout: Dashboard,
-            name: Accounting,
-            path: '/accounting'
         },
         {
             layout: Dashboard,

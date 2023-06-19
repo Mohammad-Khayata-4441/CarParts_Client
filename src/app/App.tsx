@@ -1,9 +1,9 @@
 import React, { PropsWithChildren, Suspense, useContext, useEffect } from 'react';
 // import { fetchBrands } from '@/store/brands';
-import Router from './components/Router';
+import Router from '../router/Router';
 import CssBaseline from '@mui/material/CssBaseline';
 import { BrowserRouter } from 'react-router-dom'
-import { customTheme } from './theme';
+import { customTheme } from './config/mui/theme.config';
 import rtlPlugin from 'stylis-plugin-rtl';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
@@ -12,21 +12,21 @@ import { ThemeProvider } from '@mui/material';
 import { useDispatch } from 'react-redux';
 
 
-import { AppDispatch } from './store';
+import { AppDispatch } from '../store';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { BrandApi } from './api/Brand';
-import { BrandsActions } from './store/brands';
-import { BrandItem } from './api/Brand/dto';
-import { CountryItem } from './api/Country/dto';
-import { CountryActions } from './store/countries';
-import { CountryApi } from './api/Country';
-import { SERVER_URL } from '../app.config';
+import { BrandApi } from '../api/Brand';
+import { BrandsActions } from '../features/brands/brands.reducer';
+import { BrandItem } from '../api/Brand/dto';
+import { CountryItem } from '../api/Country/dto';
+import { CountryActions } from '../features/countries/countries.reducer';
+import { CountryApi } from '../api/Country';
+import { SERVER_URL } from './config/app.config';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers';
-import FeedBackProvider from './components/FeedBackProvider';
+import FeedBackProvider from '../shared/components/FeedBackProvider';
 const stylisPlugins = [prefixer];
 const queryClient = new QueryClient({
   defaultOptions: {

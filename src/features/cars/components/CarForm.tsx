@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store";
 import { BrandItem } from "@/api/Brand/dto";
 import { useState, useEffect, useMemo } from "react";
-import Upload from "../../../components/Upload";
+import Upload from "../../../shared/components/Upload";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import { Add, Close } from "@mui/icons-material";
@@ -25,7 +25,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { CarApi } from "@/api/Car";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useServerFile } from "@/hooks/useServerFile";
+import { useServerFile } from "@/shared/hooks/useServerFile";
 
 interface propsType {
   carModifyDto: GetAllCar | null;

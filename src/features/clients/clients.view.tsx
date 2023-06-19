@@ -5,7 +5,7 @@ import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import { useQuery, useQueryClient } from "react-query";
-import { APP_CURRENCY } from '~config'
+import { APP_CURRENCY } from '@/app/config/app.config'
 import { ClientApi } from "@/api/Client";
 import {
   Card,

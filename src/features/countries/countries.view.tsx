@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { axiosIns } from '../libs/axios'
+import { axiosIns } from '@/app/config/axios/axios'
 import { useSelector, useDispatch } from 'react-redux'
 import { CountryItem } from '~/api/Country/dto'
 import Box from '@mui/material/Box';
@@ -15,7 +15,7 @@ import { IconButton } from '@mui/material';
 import { MoreVert, MoreHoriz } from '@mui/icons-material'
 import { AppDispatch, RootState } from '~/store'
 import { useQuery } from 'react-query'
-import { countriesSlice } from '@/store/countries'
+import { countriesSlice } from '@/features/countries/countries.reducer'
 function Loader() {
   return (
     <Box sx={{ width: '100%' }}>

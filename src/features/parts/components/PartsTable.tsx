@@ -21,7 +21,7 @@ import { PartItem } from "@/api/Part/GetAllDto";
 import { useQuery, useQueryClient } from "react-query";
 import { BrandItem } from "@/api/Brand/dto";
 import { GetAllCar } from "@/api/Car/dto";
-import { SERVER_URL } from "@/../app.config";
+import { SERVER_URL } from "@/app/config/app.config";
 
 type Order = "asc" | "desc";
 

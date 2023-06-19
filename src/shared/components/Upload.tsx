@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React, { ChangeEvent, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
-import { SERVER_URL } from '@/../app.config'
+import { SERVER_URL } from '@/app/config/app.config'
 import { IconButton } from '@mui/material';
 import { Close, FileUploadOutlined } from '@mui/icons-material';
 

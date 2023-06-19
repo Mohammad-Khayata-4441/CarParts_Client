@@ -1,5 +1,5 @@
 import axios, { AxiosError, type AxiosRequestConfig, type AxiosResponse } from 'axios';
-import { API_URL } from '../../app.config';
+import { API_URL } from '../app.config';
 
 const errorHandler = async (error: AxiosError) => {
     // store.commit('SET_LOADING', false)

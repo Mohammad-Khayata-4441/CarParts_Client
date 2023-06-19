@@ -10,7 +10,7 @@ import { Box } from '@mui/system'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useMutation, useQueries, useQueryClient } from 'react-query'
-import Upload from '@/components/Upload';
+import Upload from '@/shared/components/Upload';
 import { toast } from 'react-toastify'
 
 interface PropsType {

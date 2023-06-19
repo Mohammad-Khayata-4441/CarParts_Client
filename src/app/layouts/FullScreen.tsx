@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react'
-import Login from '../../pages/Login'
+import Login from '../../features/auth/login.view'
 const FullScreen = (props: PropsWithChildren) => {
     return (
         <div>{props.children}</div>

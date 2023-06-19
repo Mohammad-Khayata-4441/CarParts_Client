@@ -1,10 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { BrandReducer } from "./brands";
-import CountrySlice from './countries/'
-import CarSlice from '../features/cars/car.reducer'
-import PartSlice from "./parts";
+import { BrandReducer } from "@/features/brands/brands.reducer";
+import CountrySlice from '@/features/countries/countries.reducer'
+import CarSlice from '@/features/cars/car.reducer'
+import PartSlice from "@/features/parts/parts.reducer";
 import SettingsSlice from "@/features/settings/settings.reducer";
-import AppSlice from "./app";
 export const store = configureStore({
     reducer: {
         brand: BrandReducer,
@@ -12,7 +11,6 @@ export const store = configureStore({
         car: CarSlice,
         part: PartSlice,
         settings: SettingsSlice,
-        app:AppSlice
     }
 });
 

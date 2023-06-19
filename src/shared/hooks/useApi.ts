@@ -1,4 +1,4 @@
-import { axiosIns } from '../libs/axios';
+import { axiosIns } from '@/app/config/axios/axios';
 import Swal from 'sweetalert2';
 import { SweetAlertOptions } from 'sweetalert2'
 import { AxiosRequestConfig, AxiosError } from "axios"

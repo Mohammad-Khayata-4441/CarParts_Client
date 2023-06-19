@@ -1,6 +1,6 @@
 import { CategoryApi } from '@/api/Category'
 import { AddCategoryDto, CategoryItem } from '@/api/Category/dto'
-import Upload from '@/components/Upload'
+import Upload from '@/shared/components/Upload'
 import { Add, PlusOne } from '@mui/icons-material'
 
 import { Box, Button, Card, Dialog, DialogActions, DialogProps, DialogTitle, FormControl, FormLabel, Paper, TextField } from '@mui/material'

@@ -1,4 +1,4 @@
-import { axiosIns } from "@/libs/axios";
+import { axiosIns } from "@/app/config/axios/axios";
 
 export enum BrandController {
     BASE = 'Brand',

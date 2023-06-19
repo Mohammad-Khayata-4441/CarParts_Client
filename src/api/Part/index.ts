@@ -1,4 +1,4 @@
-import { axiosIns } from "@/libs/axios";
+import { axiosIns } from "@/app/config/axios/axios";
 import { AxiosResponse } from "axios";
 import { AddPartDTO } from "./AddPartDto";
 import { serialize } from "object-to-formdata";

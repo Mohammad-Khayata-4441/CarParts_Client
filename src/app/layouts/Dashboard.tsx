@@ -19,7 +19,7 @@ import {
   Slide,
   useScrollTrigger,
 } from "@mui/material";
-import navLinks from "@/Navigation";
+import navLinks from "@/router/Navigation";
 import { Notifications } from "@mui/icons-material";
 
 const drawerWidth = 280;

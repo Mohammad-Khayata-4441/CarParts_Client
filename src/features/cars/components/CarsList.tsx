@@ -8,7 +8,7 @@ import {
   Button,
   CardActions,
 } from "@mui/material";
-import { SERVER_URL } from "@/../app.config";
+import { SERVER_URL } from "@/app/config/app.config";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { BrandItem } from "@/api/Brand/dto";

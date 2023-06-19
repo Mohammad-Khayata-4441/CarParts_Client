@@ -1,4 +1,4 @@
-import Confirm from '@/shared/confirm'
+import Confirm from '@/shared/models/confirm'
 import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
 import React, { PropsWithChildren, createContext, useMemo, useState } from 'react'
 
