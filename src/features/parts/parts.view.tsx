@@ -19,9 +19,9 @@ import { useEffect, useMemo, useState } from "react";
 import { GetAllCar } from "@/api/Car/dto";
 import { BrandItem } from "@/api/Brand/dto";
 import { CategoryApi } from "@/api/Category";
-import { InventoryApi } from "@/api/Inventory";
+import { WarehouseApi } from "@/api/Warehouse";
 import { CategoryItem } from "@/api/Category/dto";
-import { InventoryItem } from "@/api/Inventory/dto";
+import { WarehouseItem } from "@/api/Warehouse/dto";
 import { GetAllPartsParams, PartItem } from "@/api/Part/GetAllDto";
 import { BrandApi } from "@/api/Brand";
 import { Refresh } from "@mui/icons-material";
@@ -34,7 +34,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 function Products() {
   const [carsList, setCarsList] = useState<GetAllCar[]>([]);
   const [categoriesList, setcategoriesList] = useState<CategoryItem[]>([]);
-  const [inventoriesList, setinventoriesList] = useState<InventoryItem[]>([]);
+  const [warehouseList, setWarehouseList] = useState<WarehouseItem[]>([]);
   const [brandsList, setBrandsList] = useState<BrandItem[]>([]);
   const [parts, setParts] = useState<PartItem[]>([]);
 
@@ -77,11 +77,11 @@ function Products() {
     }
   );
 
-  const inventoryQuery = useQuery<InventoryItem[]>(
-    "inventory",
-    InventoryApi.GetAll,
+  const warehouseQuery = useQuery<WarehouseItem[]>(
+    "warehouse",
+    WarehouseApi.GetAll,
     {
-      onSuccess: (data) => setinventoriesList(data),
+      onSuccess: (data) => setWarehouseList(data),
     }
   );
 
@@ -137,7 +137,7 @@ function Products() {
               </Button>
               <AddCarPart
                 brands={brands}
-                inventories={inventoriesList}
+                inventories={warehouseList}
                 categories={categoriesList}
                 cars={carsList}
               ></AddCarPart>
@@ -145,12 +145,13 @@ function Products() {
           </div>
 
           <PartsFilter
+          
             {...{
               brandsList,
               carsList,
               categoriesList,
               countriesList: [],
-              inventoriesList,
+              warehouseList,
               params,
             }}
             onFilterChange={(key: string, value: string | null) => {

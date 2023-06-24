@@ -5,7 +5,7 @@ import { GetAllPartsParams } from '@/api/Part/GetAllDto'
 import { GetAllCar } from '@/api/Car/dto'
 import { BrandItem } from '@/api/Brand/dto'
 import { CategoryItem } from '@/api/Category/dto'
-import { InventoryItem } from '@/api/Inventory/dto'
+import { WarehouseItem } from '@/api/Warehouse/dto'
 import { CountryItem } from '@/api/Country/dto'
 
 
@@ -13,7 +13,7 @@ interface Props {
     carsList: GetAllCar[]
     brandsList: BrandItem[]
     categoriesList: CategoryItem[]
-    inventoriesList: InventoryItem[]
+    warehouseList: WarehouseItem[]
     countriesList: CountryItem[],
     params: GetAllPartsParams,
     onFilterChange: (key: string, value: string | null) => void
@@ -24,7 +24,7 @@ export default ({
     brandsList,
     categoriesList,
     countriesList,
-    inventoriesList,
+    warehouseList,
     params,
     onFilterChange,
 
@@ -93,7 +93,7 @@ export default ({
                     <Select onChange={(e) => onFilterChange(e.target.name, e.target.value)} name={'StoreId' as keyof GetAllPartsParams} value={params.StoreId ?? ''} label='المستودع - المتجر' labelId='carCategory'>
 
                         {
-                            inventoriesList.map(p => <MenuItem value={p.id} key={p.id}>{p.location}</MenuItem>)
+                            warehouseList.map(p => <MenuItem value={p.id} key={p.id}>{p.location}</MenuItem>)
                         }
 
                     </Select>

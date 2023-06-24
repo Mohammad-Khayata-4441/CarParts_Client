@@ -285,7 +285,7 @@ export default function PartsTable({
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Paper sx={{ width: "100%", mb: 2 }} >
+      <Paper  >
         <EnhancedTableToolbar
           onGenerateInvoice={() =>
             onGenerateInvoice(rows.filter((item) => selected.includes(item.id)))
@@ -306,7 +306,7 @@ export default function PartsTable({
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
             />
-            <TableBody>
+            <TableBody >
               {rows.map((row, index) => {
                 const isItemSelected = isSelected(row.id);
 

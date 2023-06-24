@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import Dashboard from '@/app/layouts/Dashboard'
+import Dashboard from '@/app/layouts/Dashboard/Dashboard'
 import FullScreen from '@/app/layouts/FullScreen'
 
 const Home = React.lazy(() => import('@/features/home/home.view'))
@@ -12,7 +12,7 @@ const Invoces = React.lazy(() => import('@/features/invoices/invoice.view'))
 const Clients = React.lazy(() => import('@/features/clients/clients.view'))
 const Settings = React.lazy(() => import('@/features/settings/settings.view'))
 const Countries = React.lazy(() => import('@/features/countries/countries.view'));
-const Inventories = React.lazy(() => import('@/features/auth/login.view'))
+const Warehouses = React.lazy(() => import('@/features/warehouses/warehouses.view'))
 
 function Router() {
     const routes = [
@@ -53,8 +53,8 @@ function Router() {
         },
         {
             layout: Dashboard,
-            name: Inventories,
-            path: '/inventories'
+            name: Warehouses,
+            path: '/warehouses'
         },
         {
             layout: Dashboard,

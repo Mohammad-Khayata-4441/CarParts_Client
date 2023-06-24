@@ -3,6 +3,7 @@ import {IoCarSport , IoSettings} from 'react-icons/io5'
 import {GiAutoRepair} from 'react-icons/Gi'
 import {FaReceipt, FaUsers } from 'react-icons/fa'
 import {SiMercedes } from 'react-icons/si'
+import { WarehouseOutlined } from '@mui/icons-material'
 export default [
     {
         text: "الرئيسية",
@@ -26,6 +27,11 @@ export default [
         icon: FaReceipt 
     },
 
+    {
+        text: "المستودعات",
+        path: "/warehouses",
+        icon: WarehouseOutlined 
+    },
     {
         text: "العلامات التجارية",
         path: "/brands",

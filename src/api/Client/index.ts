@@ -26,6 +26,12 @@ export class ClientApi {
     }
 
 
+    static getClientDetails = async (id: string) => {
+        const response = await axiosIns.get(`${ClientApiEndpoints.base}/${id}`);
+        return response.data;
+    }
+
+
     static deleteClient = async (id: string) => {
         const response = await axiosIns.delete(ClientApiEndpoints.base, {
             params: {

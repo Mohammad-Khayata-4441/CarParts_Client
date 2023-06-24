@@ -1,9 +1,9 @@
-import React, { PropsWithChildren, Suspense, useContext, useEffect } from 'react';
+import React, { PropsWithChildren, Suspense, useContext, useEffect, useMemo } from 'react';
 // import { fetchBrands } from '@/store/brands';
 import Router from '../router/Router';
 import CssBaseline from '@mui/material/CssBaseline';
 import { BrowserRouter } from 'react-router-dom'
-import { customTheme } from './config/mui/theme.config';
+import {darkTheme, lightTheme} from './config/mui/theme';
 import rtlPlugin from 'stylis-plugin-rtl';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
@@ -27,6 +27,7 @@ import { SERVER_URL } from './config/app.config';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import FeedBackProvider from '../shared/components/FeedBackProvider';
+import { useDarkMode } from 'usehooks-ts';
 const stylisPlugins = [prefixer];
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -63,11 +64,14 @@ const StartupCalls = (props: PropsWithChildren) => {
 }
 function App() {
 
+  const { isDarkMode, } = useDarkMode(false);
+
+  const activeTheme = useMemo(() => isDarkMode ? darkTheme : lightTheme, [isDarkMode])
 
 
   return (
     <div className="app tw-w-full">
-      <ThemeProvider theme={customTheme}>
+      <ThemeProvider theme={activeTheme}>
         <LocalizationProvider dateAdapter={AdapterMoment}>
 
           <QueryClientProvider client={queryClient}>

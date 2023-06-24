@@ -1,6 +1,7 @@
 import { ClientApi } from "@/api/Client";
 import { CreateClient } from "@/api/Client/CreateClient";
 import { ClientItem } from "@/api/Client/GetAll";
+import { ConfirmContext } from "@/shared/components/FeedBackProvider";
 import {
   Box,
   Button,
@@ -15,8 +16,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useQuery, useQueryClient } from "react-query";
 type FormFields = Omit<CreateClient, "isSeller"> & { isSeller: 0 | 1 };
 type Props = {
   isOpen: boolean;
@@ -30,6 +32,7 @@ export default function ClientForm({
   onSubmit,
   clientDetails,
 }: Props) {
+  const confirmProvider = useContext(ConfirmContext)
   const { control, handleSubmit, reset } = useForm<FormFields>({
     defaultValues: {
       name: "",
@@ -38,7 +41,9 @@ export default function ClientForm({
     },
   });
 
+  // const { } = useQuery(['client-details', clientDetails?.id],()=>)
   const isModify = useMemo(() => Boolean(clientDetails), [clientDetails]);
+  const queryClient = useQueryClient()
 
   useEffect(() => {
     if (clientDetails) {
@@ -55,12 +60,16 @@ export default function ClientForm({
     if (isOpen === false) {
       reset({ name: "", isSeller: 0, phoneNumber: "" });
     }
+    if (isOpen === true) {
+      console.log('get data')
+    }
   }, [isOpen]);
 
   const [deleteDialog, setDeleteDialog] = useState(false);
   const deleteClient = async () => {
     if (clientDetails) {
       await ClientApi.deleteClient(clientDetails.id.toString());
+      queryClient.invalidateQueries('clients')
       setDeleteDialog(false);
       onSetOpen(false);
       onSubmit();
@@ -77,16 +86,16 @@ export default function ClientForm({
 
   return (
     <div>
-      <Dialog maxWidth="sm" fullWidth open={isOpen}>
+      <Dialog onClose={() => onSetOpen(false)} maxWidth="sm" fullWidth open={isOpen}>
         <DialogTitle>إضافة عميل</DialogTitle>
 
         <form onSubmit={handleSubmit(submit)}>
           <Box p={2} gap={2} display={"flex"} flexDirection={"column"}>
             <Controller
               name="name"
-              rules={{required:'اسم العميل مطلوب'}}
+              rules={{ required: 'اسم العميل مطلوب' }}
               control={control}
-              render={({ field , fieldState}) => (
+              render={({ field, fieldState }) => (
                 <TextField error={fieldState.invalid} helperText={fieldState.error?.message} {...field} label="اسم العميل" />
               )}
             />
@@ -103,7 +112,7 @@ export default function ClientForm({
 
               control={control}
               render={({ field }) => (
-                <TextField helperText='اختياري' {...field}  label="البريد الإلكتروني" />
+                <TextField helperText='اختياري' {...field} label="البريد الإلكتروني" />
               )}
             />
             <Controller
@@ -111,7 +120,7 @@ export default function ClientForm({
 
               control={control}
               render={({ field }) => (
-                <TextField helperText='اختياري'  {...field}  label="العنوان" />
+                <TextField helperText='اختياري'  {...field} label="العنوان" />
               )}
             />
             <Controller
@@ -143,7 +152,18 @@ export default function ClientForm({
               )}
             />
           </Box>
-          <DialogActions>
+          <DialogActions >
+            {isModify && (
+              <Button color="error" onClick={() => confirmProvider({
+                message: `سيتم حذف العميل ${clientDetails?.name} بشكل نهائي وجميع البيانات
+                المرتبطة به`,
+                title: 'حذف العميل',
+                onConfirm: async () => { await deleteClient() },
+                onReject: () => { }
+              })}>
+                حذف
+              </Button>
+            )}
             <Button
               onClick={() => {
                 onSetOpen(false);
@@ -151,29 +171,16 @@ export default function ClientForm({
             >
               الغاء
             </Button>
-            <Button type="submit" variant="contained">حفظ</Button>
-            {isModify && (
-              <Button color="error" onClick={() => setDeleteDialog(true)}>
-                حذف
-              </Button>
-            )}
+            <Button sx={{ justifySelf: 'flex-end' }} type="submit" variant="contained">حفظ</Button>
+
           </DialogActions>
         </form>
       </Dialog>
 
-      <Dialog open={deleteDialog}>
-        <DialogTitle>حذف عميل</DialogTitle>
-        <Box px={2}>
-          <Typography>
-            سيتم حذف العميل {clientDetails?.name} بشكل نهائي وجميع البيانات
-            المرتبطة به
-          </Typography>
-        </Box>
-        <DialogActions>
-          <Button onClick={() => deleteClient()}>تأكيد</Button>
-          <Button>تراجع</Button>
-        </DialogActions>
-      </Dialog>
+
+
+
+
     </div>
   );
 }

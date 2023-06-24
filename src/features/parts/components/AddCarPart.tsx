@@ -1,7 +1,7 @@
 import { BrandItem } from '@/api/Brand/dto'
 import { GetAllCar } from '@/api/Car/dto'
 import { CategoryItem } from '@/api/Category/dto'
-import { InventoryItem } from '@/api/Inventory/dto'
+import { WarehouseItem } from '@/api/Warehouse/dto'
 import { PartApi } from '@/api/Part'
 import { AddPartDTO } from '@/api/Part/AddPartDto'
 import { Add, Close, } from '@mui/icons-material'
@@ -16,7 +16,7 @@ import { toast } from 'react-toastify'
 interface PropsType {
     cars: GetAllCar[],
     brands: BrandItem[],
-    inventories: InventoryItem[],
+    inventories: WarehouseItem[],
     categories: CategoryItem[]
 }
 export default function AddPart(props: PropsType) {

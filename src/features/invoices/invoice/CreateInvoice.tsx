@@ -1,6 +1,6 @@
 import { ClientItem } from "@/api/Client/GetAll";
-import { InvoiceApi } from "@/api/components";
-import { AddInvoiceDto } from "@/api/components/AddInvoiceDto";
+import { InvoiceApi } from "@/api/Invoice";
+import { AddInvoiceDto } from "@/api/Invoice/AddInvoiceDto";
 import { GetAllParts, PartItem } from "@/api/Part/GetAllDto";
 import { Add, Close } from "@mui/icons-material";
 import {
@@ -170,6 +170,8 @@ export default (props: Props) => {
                 render={({ field, fieldState }) => {
                   return (
                     <TextField
+                    error={fieldState.invalid}
+                    helperText={fieldState.error?.message}
                       size="small"
                       sx={{ mt: 1 }}
                       className="col-span-4"
@@ -341,3 +343,4 @@ export default (props: Props) => {
     </div>
   );
 };
+

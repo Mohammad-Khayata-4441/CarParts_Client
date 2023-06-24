@@ -59,7 +59,7 @@ export default function categoriesTab() {
                                 categories.map((cat) => <TableRow key={cat.id}>
                                     <TableCell>
                                         <Box display={'flex'} alignItems={'center'} gap={4}>
-                                            <img src={useServerFile(cat.image)}></img>
+                                            <img className='h-12' src={useServerFile(cat.image)}></img>
                                             <Typography>
                                                 {cat.name}
 

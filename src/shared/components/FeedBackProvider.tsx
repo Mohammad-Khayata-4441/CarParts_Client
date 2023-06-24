@@ -1,13 +1,13 @@
 import Confirm from '@/shared/models/confirm'
 import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
 import React, { PropsWithChildren, createContext, useMemo, useState } from 'react'
+import { useQueryClient } from 'react-query';
 
 export const ConfirmContext = createContext<((c: Confirm) => any)>(() => { });
 
 export default function FeedBackProvider(props: PropsWithChildren) {
     const [confirm, setConfirmMessage] = useState<(Confirm) | null>(null)
     const [isLoading, setIsLoading] = useState(false);
-
     const setConfirm = (confirm: Confirm | null) => {
         setConfirmMessage(confirm)
     }
