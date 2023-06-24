@@ -1,6 +1,6 @@
 import {HiHome , HiFlag} from 'react-icons/hi2'
 import {IoCarSport , IoSettings} from 'react-icons/io5'
-import {GiAutoRepair} from 'react-icons/Gi'
+import {GiAutoRepair} from 'react-icons/gi'
 import {FaReceipt, FaUsers } from 'react-icons/fa'
 import {SiMercedes } from 'react-icons/si'
 import { WarehouseOutlined } from '@mui/icons-material'
