@@ -20,6 +20,7 @@ import { CountryItem } from "@/api/Country/dto";
 import { CarApi } from "@/api/Car";
 import { useQuery } from "react-query";
 import { CarActions } from "@/features/cars/car.reducer";
+import NoData from "@/shared/components/NoData";
 export default function Cars() {
 
   const [filter, setFilter] = useState({
@@ -45,13 +46,13 @@ export default function Cars() {
 
   const dispatch = useDispatch<AppDispatch>();
 
-const cars = useSelector<RootState, GetAllCar[]>((state) => state.car.cars);
+  const cars = useSelector<RootState, GetAllCar[]>((state) => state.car.cars);
 
-const filterdCars = useMemo(() => cars.filter(c => (
-  (c.brandId === filter.brandId || !filter.brandId) &&
-  ((c.name.toLowerCase().includes(filter.search.toLocaleLowerCase())) || !filter.search)
+  const filterdCars = useMemo(() => cars.filter(c => (
+    (c.brandId === filter.brandId || !filter.brandId) &&
+    ((c.name.toLowerCase().includes(filter.search.toLocaleLowerCase())) || !filter.search)
 
-)), [JSON.stringify(filter), cars])
+  )), [JSON.stringify(filter), cars])
 
 
   return (
@@ -96,12 +97,18 @@ const filterdCars = useMemo(() => cars.filter(c => (
       </Card>
 
       <div className="mt-4">
-        <CarsList
-          onDetails={(car) => {
-            setModifyItem(car);
-          }}
-          carsList={filterdCars}
-        ></CarsList>
+
+        {filterdCars.length ?
+          <CarsList
+            onDetails={(car) => {
+              setModifyItem(car);
+            }}
+            carsList={filterdCars}
+          ></CarsList>
+          : <NoData></NoData>
+        }
+
+
       </div>
     </div>
   );

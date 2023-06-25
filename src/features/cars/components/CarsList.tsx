@@ -14,6 +14,7 @@ import { RootState } from "@/store";
 import { BrandItem } from "@/api/Brand/dto";
 import { Edit } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import NoData from "@/shared/components/NoData";
 
 type propsType = {
   carsList: GetAllCar[];
@@ -27,7 +28,9 @@ export default function CarsList(props: propsType) {
   const getFileUrl = (url: string) => `${SERVER_URL}/${url}`;
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
-      {props.carsList.map((car) => (
+      {
+   
+      props.carsList.map((car) => (
         <Card
           key={car.id}
           sx={{ borderRadius: "24px 24px 10px 10px", padding: "6px" }}
@@ -82,7 +85,11 @@ export default function CarsList(props: propsType) {
             </Button>
           </CardActions>
         </Card>
-      ))}
+      ))
+      
+      
+      
+      }
     </div>
   );
 }

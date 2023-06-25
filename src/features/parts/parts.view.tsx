@@ -30,6 +30,7 @@ import { ClientItem } from "@/api/Client/GetAll";
 import { ClientApi } from "@/api/Client";
 import { useParams, useSearchParams } from "react-router-dom";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import NoData from "@/shared/components/NoData";
 
 function Products() {
   const [carsList, setCarsList] = useState<GetAllCar[]>([]);
@@ -175,14 +176,22 @@ function Products() {
         onClose={(e) => setInvoiceDialog(e)}
         is={invoiceDialog}
       ></CreateInvoice>
-      <PartsTable
+
+      {
+        parts.length?
+        <PartsTable
         onGenerateInvoice={(data: PartItem[]) => showInvoiceDialog(data)}
         page={params.PageNumber}
         onPageChange={onPaginationChage}
         rows={parts}
         rowsPerPage={params.PageSize}
         totalCount={total}
-      />
+        />
+        :<NoData/>
+
+      }
+
+
     </div>
   );
 }

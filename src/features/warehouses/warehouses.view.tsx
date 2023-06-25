@@ -58,17 +58,21 @@ export default function Warehouse() {
       <Card sx={{ mt: 4 }}>
 
         <Table>
-          <TableHead>
-            <TableCell sx={{ fontWeight: 'bold' }}>الصورة</TableCell>
-            <TableCell sx={{ fontWeight: 'bold' }}>الاسم</TableCell>
-            <TableCell sx={{ fontWeight: 'bold' }}>العنوان</TableCell>
-            <TableCell sx={{ fontWeight: 'bold' }}>عدد القطع</TableCell>
-            <TableCell sx={{ fontWeight: 'bold' }}>إجرائات</TableCell>
 
+          <TableHead>
+
+            <TableRow>
+              <TableCell sx={{ fontWeight: 'bold' }}>الصورة</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }}>الاسم</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }}>العنوان</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }}>عدد القطع</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }}>إجرائات</TableCell>
+
+            </TableRow>
           </TableHead>
           <TableBody>
             {
-              warehouseList.map(wh => <TableRow>
+              warehouseList.map(wh => <TableRow key={wh.id}>
                 <TableCell>
                   <img className='h-12 rounded' src='https://mecaluxcom.cdnwm.com/blog/img/warehouse-storage-techniques.1.1.jpg'></img>
                 </TableCell>

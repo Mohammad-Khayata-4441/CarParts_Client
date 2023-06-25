@@ -3,6 +3,7 @@ import { AddInvoiceDto } from "./AddInvoiceDto";
 
 enum InvoiceEndPoints {
   Base = "/Invoice",
+  GetClientAccount = "/Invoice/GetAccountClient/"
 }
 
 export class InvoiceApi {
@@ -11,10 +12,16 @@ export class InvoiceApi {
   }
 
   static async CreateInvoice(payload: AddInvoiceDto) {
-    const {data} = await axiosIns.post<AddInvoiceDto, any>(
+    const { data } = await axiosIns.post<AddInvoiceDto, any>(
       InvoiceEndPoints.Base,
       payload
     );
     return data
+  }
+
+  static async GetClientAccount(clientId: string) {
+    const { data } = await axiosIns.get<any>(InvoiceEndPoints.GetClientAccount + `${clientId}`)
+    return data;
+
   }
 }

@@ -1,6 +1,7 @@
 import { ClientApi } from "@/api/Client";
 import { CreateClient } from "@/api/Client/CreateClient";
 import { ClientItem } from "@/api/Client/GetAll";
+import { InvoiceApi } from "@/api/Invoice";
 import { ConfirmContext } from "@/shared/components/FeedBackProvider";
 import {
   Box,
@@ -41,7 +42,6 @@ export default function ClientForm({
     },
   });
 
-  // const { } = useQuery(['client-details', clientDetails?.id],()=>)
   const isModify = useMemo(() => Boolean(clientDetails), [clientDetails]);
   const queryClient = useQueryClient()
 
@@ -66,6 +66,9 @@ export default function ClientForm({
   }, [isOpen]);
 
   const [deleteDialog, setDeleteDialog] = useState(false);
+  const { } = useQuery(['client-account'], () => InvoiceApi.GetClientAccount(clientDetails?.id.toString() as string), {
+    enabled: isModify
+  })
   const deleteClient = async () => {
     if (clientDetails) {
       await ClientApi.deleteClient(clientDetails.id.toString());
@@ -86,11 +89,44 @@ export default function ClientForm({
 
   return (
     <div>
-      <Dialog onClose={() => onSetOpen(false)} maxWidth="sm" fullWidth open={isOpen}>
-        <DialogTitle>إضافة عميل</DialogTitle>
+      <Dialog onClose={() => onSetOpen(false)} maxWidth="md" fullWidth open={isOpen}>
+        <Box width={'100%'} display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
 
+          <DialogTitle>
+            {
+              isModify?
+              "معلومات العميل"
+              :"إضافة عميل"
+            }
+            </DialogTitle>
+          <Controller
+            name="isSeller"
+            control={control}
+            render={({ field }) => (
+              <FormControl >
+
+                <RadioGroup
+                  {...field}
+                  row
+                  name="row-radio-buttons-group"
+                >
+                  <FormControlLabel
+                    value={0}
+                    control={<Radio />}
+                    label="زبون"
+                  />
+                  <FormControlLabel
+                    value={1}
+                    control={<Radio />}
+                    label="متجر"
+                  />
+                </RadioGroup>
+              </FormControl>
+            )}
+          />
+        </Box>
         <form onSubmit={handleSubmit(submit)}>
-          <Box p={2} gap={2} display={"flex"} flexDirection={"column"}>
+          <Box p={2} gap={2} className='grid grid-cols-2'>
             <Controller
               name="name"
               rules={{ required: 'اسم العميل مطلوب' }}
@@ -123,34 +159,7 @@ export default function ClientForm({
                 <TextField helperText='اختياري'  {...field} label="العنوان" />
               )}
             />
-            <Controller
-              name="isSeller"
-              control={control}
-              render={({ field }) => (
-                <FormControl>
-                  <FormLabel id="demo-row-radio-buttons-group-label">
-                    نوع العميل
-                  </FormLabel>
-                  <RadioGroup
-                    {...field}
-                    row
-                    aria-labelledby="demo-row-radio-buttons-group-label"
-                    name="row-radio-buttons-group"
-                  >
-                    <FormControlLabel
-                      value={0}
-                      control={<Radio />}
-                      label="زبون"
-                    />
-                    <FormControlLabel
-                      value={1}
-                      control={<Radio />}
-                      label="متجر"
-                    />
-                  </RadioGroup>
-                </FormControl>
-              )}
-            />
+
           </Box>
           <DialogActions >
             {isModify && (
