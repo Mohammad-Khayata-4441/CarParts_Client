@@ -12,9 +12,14 @@ interface Props {
 }
 
 export default function CreateWarehouse({ dialogProps, modifyDto }: Props) {
-    const isModify = useMemo(() => modifyDto && modifyDto.id, [modifyDto])
+    //Hooks
     const queryClient = useQueryClient()
     const { control, handleSubmit } = useForm<AddWarehouseDto>({ defaultValues: { location: "", name: "" } })
+    
+    // Getters &  State
+    const isModify = useMemo(() => modifyDto && modifyDto.id, [modifyDto])
+
+    // Functions
     const onSubmit = async (dto: AddWarehouseDto) => {
         console.log('on submit')
         await WarehouseApi.AddWarehouse(dto)

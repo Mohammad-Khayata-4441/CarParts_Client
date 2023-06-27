@@ -9,11 +9,24 @@ import { ConfirmContext } from '@/shared/components/FeedBackProvider';
 import { toast } from 'react-toastify';
 
 export default function Warehouse() {
+  // Hooks
   const confirmCtx = useContext(ConfirmContext)
+  const queryClient = useQueryClient()
+  const warehouseQuery = useQuery<WarehouseItem[]>(
+    "warehouse",
+    WarehouseApi.GetAll,
+    {
+      onSuccess: (data) => setWarehouseList(data),
+    }
+  );
+
+
+  //stage 
   const [warehouseList, setWarehouseList] = useState<WarehouseItem[]>([]);
   const [dialogOpen, setdialogOpen] = useState(false)
-  const [modifyDto, setModifyDto] = useState<WarehouseItem | null>(null)
-  const queryClient = useQueryClient()
+  const [modifyDto] = useState<WarehouseItem | null>(null)
+
+  // Functions 
   const deleteWarehouse = async (id: number) => {
     try {
 
@@ -33,13 +46,8 @@ export default function Warehouse() {
     }
 
   }
-  const warehouseQuery = useQuery<WarehouseItem[]>(
-    "warehouse",
-    WarehouseApi.GetAll,
-    {
-      onSuccess: (data) => setWarehouseList(data),
-    }
-  );
+
+
   return (
     <div>
       <Card sx={{ p: 3, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
