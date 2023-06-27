@@ -12,6 +12,10 @@ import { Controller, useForm } from 'react-hook-form'
 import { useMutation, useQueries, useQueryClient } from 'react-query'
 import Upload from '@/shared/components/Upload';
 import { toast } from 'react-toastify'
+import CarForm from '@/features/cars/components/CarForm'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '@/store'
+import { CarActions } from '@/features/cars/car.reducer'
 
 interface PropsType {
     cars: GetAllCar[],
@@ -31,6 +35,8 @@ export default function AddPart(props: PropsType) {
 
     const [open, setOpen] = useState(false)
 
+    const dispatch = useDispatch<AppDispatch>()
+
     const mutation = useMutation('carPart', {
         mutationFn: PartApi.addPart,
         onSuccess: () => {
@@ -46,7 +52,7 @@ export default function AddPart(props: PropsType) {
 
     const onSubmit = (values: AddPartDTO) => {
         mutation.mutate(values);
-        
+
     }
 
     return (
@@ -113,7 +119,7 @@ export default function AddPart(props: PropsType) {
                                 <FormControl className='col-span-12 md:col-span-6'   >
                                     <InputLabel id='carType'>السيارات المرتبطة بالقطعة</InputLabel>
                                     <Select   {...field} multiple label='السيارات المرتبطة بالقطعة' labelId='carType'>
-
+                                        <MenuItem onClick={() => dispatch(CarActions.setCarModal(true))} sx={({ palette }) => ({ color: palette.primary.main})}>إضافة سيارة جديدة  <Add></Add></MenuItem>
                                         {
                                             props.cars.map(c => <MenuItem value={c.id} key={c.id}>{c.name}</MenuItem>)
                                         }
@@ -121,7 +127,6 @@ export default function AddPart(props: PropsType) {
                                     </Select>
                                 </FormControl>
                             } />
-
 
 
                             <Controller rules={{ required: 'يرجى اختيار المتجر الذي تتوفر فيه القطعة' }} name='storeId' control={control} render={({ field, fieldState }) =>
@@ -176,6 +181,7 @@ export default function AddPart(props: PropsType) {
 
                             <Button className='col-span-12 md:col-span-12' variant='contained' type='submit' >حفظ القطعة</Button>
                         </Box>
+                        <CarForm showBtn={false} onCloseDialog={() => { dispatch(CarActions.setCarModal(false)) }} ></CarForm>
 
                     </DialogContent>
 

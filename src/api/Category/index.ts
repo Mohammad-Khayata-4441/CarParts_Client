@@ -21,4 +21,9 @@ export class CategoryApi {
         const { data } = await axiosIns.post(CategoryEndpoint.Base, formData)
         return data;
     }
+
+    static async DeletePartCategory(id: string) {
+       const {data} =  await axiosIns.delete(CategoryEndpoint.Base, { params: { id } })
+        return  data
+    }
 }

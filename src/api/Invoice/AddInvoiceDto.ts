@@ -1,11 +1,13 @@
+import { InvoiceType } from "@/features/invoices/enums/InvoiceType";
+
 class AddInvoiceDto {
-  date: string|Date = "";
-  coast: number = 0;
+  invoiceType:InvoiceType = InvoiceType.SellInvoice
+  cost: number = 0;
+  description: string = "";
   clientId: string = '';
-  isImport: boolean = false;
-  received = true;
   notes: string = "";
   services: number = 0;
+  date: string | Date = "";
   parts: Part[] = [];
 }
 

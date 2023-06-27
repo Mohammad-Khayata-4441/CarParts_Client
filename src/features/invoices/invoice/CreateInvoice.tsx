@@ -2,7 +2,7 @@ import { ClientItem } from "@/api/Client/GetAll";
 import { InvoiceApi } from "@/api/Invoice";
 import { AddInvoiceDto } from "@/api/Invoice/AddInvoiceDto";
 import { GetAllParts, PartItem } from "@/api/Part/GetAllDto";
-import { Add, Close } from "@mui/icons-material";
+import { Add, Close, Receipt, Save } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -14,13 +14,9 @@ import {
   FormControl,
   FormControlLabel,
   FormHelperText,
-  FormLabel,
   IconButton,
   InputLabel,
   MenuItem,
-  Modal,
-  Radio,
-  RadioGroup,
   Select,
   Table,
   TableBody,
@@ -30,17 +26,21 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import  { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { InvoiceType, InvoiceTypeLabels } from "../enums/InvoiceType";
+
 interface Props {
   is: boolean;
   onClose: (is: boolean) => void;
   customers: ClientItem[];
   parts: PartItem[];
   onSubmit: (data: AddInvoiceDto) => void;
+  invoiceType: InvoiceType;
 }
 
 export default (props: Props) => {
+  const [received, setReceived] = useState(true)
   useEffect(() => {
     if (props.parts)
       setValue(
@@ -55,11 +55,11 @@ export default (props: Props) => {
   }, [props.parts]);
 
   const initialFormState: AddInvoiceDto = {
-    received: true,
+    invoiceType: props.invoiceType,
+    description: "",
     clientId: "",
-    coast: 0,
+    cost: 0,
     date: new Date().toISOString().substring(0, 10),
-    isImport: false,
     notes: "",
     services: 0,
     parts: [],
@@ -73,7 +73,7 @@ export default (props: Props) => {
   const parts = watch("parts", []); // you can also target specific fields by their names
   const service = watch("services", 0); // you can also target specific fields by their names
 
-  const onSubmit = (data: AddInvoiceDto) => {
+  const onSubmit = async (data: AddInvoiceDto) => {
     data.date = new Date(data.date);
     InvoiceApi.CreateInvoice(data);
   };
@@ -82,7 +82,7 @@ export default (props: Props) => {
     console.log("wtf is changing");
 
     setValue(
-      "coast",
+      "cost",
       parts.reduce((prev, curr) => {
         return +prev + +curr.price * +curr.quantity;
       }, 0) + +service
@@ -93,37 +93,20 @@ export default (props: Props) => {
       <Dialog open={props.is} maxWidth={"md"} fullWidth>
         <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'} pr={2}>
 
-          <DialogTitle >إنشاء فاتورة</DialogTitle>
-          <IconButton onClick={()=>props.onClose(false)}>
+          <DialogTitle >
+            
+             توليد فاتورة {InvoiceTypeLabels[props.invoiceType]}
+            
+            </DialogTitle>
+          <IconButton onClick={() => props.onClose(false)}>
             <Close></Close>
           </IconButton>
         </Box>
         <form onSubmit={handleSubmit(onSubmit)}>
-          
-          
+
+
           <DialogContent>
             <div className="grid grid-cols-12 gap-4">
-              <Controller
-                name="isImport"
-                control={control}
-                render={({ field }) => (
-                  <FormControl className="col-span-12">
-                    <FormLabel>نوع الفاتورة</FormLabel>
-                    <RadioGroup row defaultValue={false}>
-                      <FormControlLabel
-                        value={false}
-                        control={<Radio />}
-                        label="مبيع"
-                      />
-                      <FormControlLabel
-                        value={true}
-                        control={<Radio />}
-                        label="شراء"
-                      />
-                    </RadioGroup>
-                  </FormControl>
-                )}
-              />
 
               <Controller
                 name="clientId"
@@ -147,7 +130,7 @@ export default (props: Props) => {
                         >
                           <Typography color={'primary'}>
 
-                          إضافة زبون جديد <Add />
+                            إضافة زبون جديد <Add />
                           </Typography>
                         </MenuItem>
                         {props.customers.map((c) => (
@@ -170,8 +153,8 @@ export default (props: Props) => {
                 render={({ field, fieldState }) => {
                   return (
                     <TextField
-                    error={fieldState.invalid}
-                    helperText={fieldState.error?.message}
+                      error={fieldState.invalid}
+                      helperText={fieldState.error?.message}
                       size="small"
                       sx={{ mt: 1 }}
                       className="col-span-4"
@@ -291,7 +274,7 @@ export default (props: Props) => {
                         <Box display={"flex"} gap={2}>
                           {parts.length && (
                             <Controller
-                              name="coast"
+                              name="cost"
                               control={control}
                               render={({ field }) => (
                                 <TextField
@@ -303,23 +286,30 @@ export default (props: Props) => {
                               )}
                             />
                           )}
-                          <Controller
-                            name="received"
-                            control={control}
-                            render={({ field }) => (
-                              <FormControlLabel
-                                {...field}
-                                control={<Checkbox defaultChecked />}
-                                label="مقبوضة"
-                              />
-                            )}
-                          ></Controller>
+
+                          <FormControlLabel
+                            control={<Checkbox defaultChecked={received} onChange={(e) => { setReceived(e.target.checked) }} />}
+                            label="مقبوضة"
+                          />
                         </Box>
+
                       </TableCell>
                     </TableRow>
                   </TableBody>
                 </Table>
               )}
+              <Controller
+                control={control}
+                name="description"
+                render={({ field }) => (
+                  <TextField
+                    label="وصف الفاتورة"
+                    className="col-span-12"
+                    multiline
+                    {...field}
+                  ></TextField>
+                )}
+              />
               <Controller
                 control={control}
                 name="notes"
@@ -334,9 +324,9 @@ export default (props: Props) => {
               />
             </div>
           </DialogContent>
-          <DialogActions>
-            <Button type="submit">حفظ</Button>
-            <Button onClick={() => props.onClose(false)}>اغلاق</Button>
+          <DialogActions >
+            <Button color="inherit" onClick={() => props.onClose(false)}>اغلاق</Button>
+            <Button variant="contained" type="submit" sx={{ minWidth: 150 }} endIcon={<Receipt />}>حفظ</Button>
           </DialogActions>
         </form>
       </Dialog>

@@ -33,7 +33,10 @@ export default function categoriesTab() {
         <div>
             <AddPartCategory modifyDto={modifyDto} onSubmit={() => {
                 queryClient.invalidateQueries('part-category')
-            }} dialogProps={{ open: partCategoryDialog, onClose: () => setPartCategoryDialog(false) }} ></AddPartCategory>
+                setPartCategoryDialog(false)
+            }}
+
+                dialogProps={{ open: partCategoryDialog, onClose: () => setPartCategoryDialog(false) }} ></AddPartCategory>
             <Box className='grid grid-cols-12'>
                 <Card className='p-4 col-span-6'>
                     <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
@@ -88,12 +91,10 @@ export default function categoriesTab() {
                                                         message: "سيتم حذف هذا التصنيف بشكل نهائي .. هل انت متأكد ؟",
                                                         onReject: () => { console.log('wtf close') },
                                                         title: 'حذف التصنيف',
-                                                        onConfirm: () => {
-                                                            return new Promise((resolve) => {
-                                                                setTimeout(() => {
-                                                                    resolve(true)
-                                                                }, 3000)
-                                                            })
+                                                        onConfirm: async () => {
+                                                            await CategoryApi.DeletePartCategory(cat.id)
+                                                            queryClient.invalidateQueries('part-category')
+                                                            return true
                                                         }
                                                     })
                                             }}

@@ -52,6 +52,10 @@ export default function AddPartCategory({ dialogProps, onSubmit: onSubmitProp, m
     const onSubmit = async (data: AddCategoryDto) => {
         await CategoryApi.AddPartCategory(data)
         onSubmitProp(data);
+        reset()
+        setUrl('')
+
+        
 
     }
     return (

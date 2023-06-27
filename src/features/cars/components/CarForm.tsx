@@ -28,11 +28,12 @@ import { toast } from "react-toastify";
 import { useServerFile } from "@/shared/hooks/useServerFile";
 
 interface propsType {
-  carModifyDto: GetAllCar | null;
+  carModifyDto?: GetAllCar | null;
   onCloseDialog: () => void;
+  showBtn:boolean
 }
 
-export default function FormDialog({ carModifyDto, onCloseDialog }: propsType) {
+export default function FormDialog({ carModifyDto, onCloseDialog ,  showBtn}: propsType) {
   const initialFormState = {
     brandId: "",
     carCategoryId: "",
@@ -87,7 +88,7 @@ export default function FormDialog({ carModifyDto, onCloseDialog }: propsType) {
   };
 
   useEffect(() => {
-    if (carModifyDto !== null && carModifyDto.id) {
+    if (carModifyDto && carModifyDto.id) {
       dispatch(CarActions.setCarModal(true));
       reset({
         brandId: carModifyDto.brandId,
@@ -109,13 +110,17 @@ export default function FormDialog({ carModifyDto, onCloseDialog }: propsType) {
 
   return (
     <div>
-      <Button
-        variant="contained"
-        onClick={() => dispatch(CarActions.setCarModal(true))}
-      >
-        إضافة سيارة
-        <Add></Add>
-      </Button>
+      {
+        showBtn &&
+
+        <Button
+          variant="contained"
+          onClick={() => dispatch(CarActions.setCarModal(true))}
+        >
+          إضافة سيارة
+          <Add></Add>
+        </Button>
+      }
 
       <Dialog fullWidth open={showModal}>
         <Box>
@@ -199,7 +204,7 @@ export default function FormDialog({ carModifyDto, onCloseDialog }: propsType) {
                     name="image"
                   />
                 } />
-           
+
               </div>
             </DialogContent>
             <DialogActions sx={{ justifyContent: "space-between" }}>

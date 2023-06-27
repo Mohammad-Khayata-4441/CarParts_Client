@@ -22,6 +22,7 @@ import { useQuery, useQueryClient } from "react-query";
 import { BrandItem } from "@/api/Brand/dto";
 import { GetAllCar } from "@/api/Car/dto";
 import { SERVER_URL } from "@/app/config/app.config";
+import { InvoiceType } from "@/features/invoices/enums/InvoiceType";
 
 type Order = "asc" | "desc";
 
@@ -125,7 +126,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 
 interface EnhancedTableToolbarProps {
   numSelected: number;
-  onGenerateInvoice: () => void;
+  onGenerateInvoice: (invoiceType:InvoiceType) => void;
 }
 
 function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
@@ -170,7 +171,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
             className="flex-grow whitespace-nowrap"
             variant="contained"
             size="large"
-            onClick={() => onGenerateInvoice()}
+            onClick={() => onGenerateInvoice(InvoiceType.PurchaseInvoice)}
             startIcon={<Receipt />}
           >
              توليد فاتورة شراء
@@ -180,7 +181,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
             variant="contained"
             size="large"
             color="secondary"
-            onClick={() => onGenerateInvoice()}
+            onClick={() => onGenerateInvoice(InvoiceType.SellInvoice)}
             startIcon={<Receipt />}
           >
              توليد فاتورة مبيع
@@ -216,7 +217,7 @@ export default function PartsTable({
   rows: PartItem[];
   totalCount: number;
   onPageChange: (newPage: number, rowsPerPage: number) => void;
-  onGenerateInvoice: (parts: PartItem[]) => void;
+  onGenerateInvoice: (parts: PartItem[], invoiceType:InvoiceType) => void;
   rowsPerPage: number;
   page: number;
 }) {
@@ -287,8 +288,8 @@ export default function PartsTable({
     <Box sx={{ width: "100%" }}>
       <Paper  >
         <EnhancedTableToolbar
-          onGenerateInvoice={() =>
-            onGenerateInvoice(rows.filter((item) => selected.includes(item.id)))
+          onGenerateInvoice={(type) =>
+            onGenerateInvoice(rows.filter((item) => selected.includes(item.id)),type)
           }
           numSelected={selected.length}
         />
