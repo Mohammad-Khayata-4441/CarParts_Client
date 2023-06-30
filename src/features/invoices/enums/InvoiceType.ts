@@ -10,5 +10,4 @@ export enum InvoiceTypeLabels {
     "مبيع",
     "قبض",
     "دفع"
-
 }

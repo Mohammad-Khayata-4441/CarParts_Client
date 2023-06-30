@@ -2,19 +2,32 @@ import { ClientApi } from "@/api/Client";
 import { CreateClient } from "@/api/Client/CreateClient";
 import { ClientItem } from "@/api/Client/GetAll";
 import { InvoiceApi } from "@/api/Invoice";
+import { ClientInvoice } from "@/api/Invoice/ClientInvoice.dto";
+import InvoicesTable from "@/features/invoices/invoice/InvoicesTable";
 import { ConfirmContext } from "@/shared/components/FeedBackProvider";
+import { Close } from "@mui/icons-material";
 import {
   Box,
   Button,
   Dialog,
   DialogActions,
+  DialogContent,
   DialogTitle,
   FormControl,
   FormControlLabel,
   FormLabel,
+  IconButton,
   Radio,
   RadioGroup,
+  Skeleton,
+  Table,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableRow,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { useContext, useEffect, useMemo, useState } from "react";
@@ -41,7 +54,7 @@ export default function ClientForm({
       isSeller: 0,
     },
   });
-
+  const [clientInvoices, setclientInvoices] = useState<ClientInvoice[]>([])
   const isModify = useMemo(() => Boolean(clientDetails), [clientDetails]);
   const queryClient = useQueryClient()
 
@@ -65,15 +78,17 @@ export default function ClientForm({
     }
   }, [isOpen]);
 
-  const [deleteDialog, setDeleteDialog] = useState(false);
-  const { } = useQuery(['client-account'], () => InvoiceApi.GetClientAccount(clientDetails?.id.toString() as string), {
-    enabled: isModify
+  const { isFetching, isLoading } = useQuery(['client-account'], () => InvoiceApi.GetClientAccount(clientDetails?.id.toString() as string), {
+    enabled: isModify,
+    refetchOnWindowFocus:false,
+    onSuccess: (data) => {
+      setclientInvoices(data)
+    }
   })
   const deleteClient = async () => {
     if (clientDetails) {
       await ClientApi.deleteClient(clientDetails.id.toString());
       queryClient.invalidateQueries('clients')
-      setDeleteDialog(false);
       onSetOpen(false);
       onSubmit();
     }
@@ -90,103 +105,133 @@ export default function ClientForm({
   return (
     <div>
       <Dialog onClose={() => onSetOpen(false)} maxWidth="md" fullWidth open={isOpen}>
-        <Box width={'100%'} display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
-
-          <DialogTitle>
-            {
-              isModify?
-              "معلومات العميل"
-              :"إضافة عميل"
-            }
-            </DialogTitle>
-          <Controller
-            name="isSeller"
-            control={control}
-            render={({ field }) => (
-              <FormControl >
-
-                <RadioGroup
-                  {...field}
-                  row
-                  name="row-radio-buttons-group"
-                >
-                  <FormControlLabel
-                    value={0}
-                    control={<Radio />}
-                    label="زبون"
-                  />
-                  <FormControlLabel
-                    value={1}
-                    control={<Radio />}
-                    label="متجر"
-                  />
-                </RadioGroup>
-              </FormControl>
-            )}
-          />
-        </Box>
         <form onSubmit={handleSubmit(submit)}>
-          <Box p={2} gap={2} className='grid grid-cols-2'>
-            <Controller
-              name="name"
-              rules={{ required: 'اسم العميل مطلوب' }}
-              control={control}
-              render={({ field, fieldState }) => (
-                <TextField error={fieldState.invalid} helperText={fieldState.error?.message} {...field} label="اسم العميل" />
-              )}
-            />
 
-            <Controller
-              name="phoneNumber"
-              control={control}
-              render={({ field }) => (
-                <TextField {...field} type="number" label="رقم الهاتف" />
-              )}
-            />
-            <Controller
-              name="email"
+          <Box width={'100%'} display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
 
-              control={control}
-              render={({ field }) => (
-                <TextField helperText='اختياري' {...field} label="البريد الإلكتروني" />
-              )}
-            />
-            <Controller
-              name="address"
+            <DialogTitle>
+              {
+                isModify ?
+                  "معلومات العميل"
+                  : "إضافة عميل"
+              }
+            </DialogTitle>
 
-              control={control}
-              render={({ field }) => (
-                <TextField helperText='اختياري'  {...field} label="العنوان" />
-              )}
-            />
+            <IconButton sx={{mx:2}} onClick={() => onSetOpen(false)}>
+              <Close></Close>
+            </IconButton>
 
           </Box>
-          <DialogActions >
-            {isModify && (
-              <Button color="error" onClick={() => confirmProvider({
-                message: `سيتم حذف العميل ${clientDetails?.name} بشكل نهائي وجميع البيانات
-                المرتبطة به`,
-                title: 'حذف العميل',
-                onConfirm: async () => { await deleteClient() },
-                onReject: () => { }
-              })}>
-                حذف
-              </Button>
-            )}
-            <Button
-              onClick={() => {
-                onSetOpen(false);
-              }}
-            >
-              الغاء
-            </Button>
-            <Button sx={{ justifySelf: 'flex-end' }} type="submit" variant="contained">حفظ</Button>
+          <DialogContent sx={{ p: 2 }}>
+            <Controller
+              name="isSeller"
+              control={control}
+              render={({ field }) => (
+                <FormControl sx={{ mb: 2 }} >
+                  <FormLabel>نوع العميل</FormLabel>
+                  <RadioGroup
+                    {...field}
+                    row
+                    name="row-radio-buttons-group"
+                  >
+                    <FormControlLabel
+                      value={0}
+                      control={<Radio />}
+                      label="زبون"
+                    />
+                    <FormControlLabel
+                      value={1}
+                      control={<Radio />}
+                      label="بائع"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              )}
+            />
+            <Box gap={2} className='grid grid-cols-2'>
+              <Controller
+                name="name"
+                rules={{ required: 'اسم العميل مطلوب' }}
+                control={control}
+                render={({ field, fieldState }) => (
+                  <TextField error={fieldState.invalid} helperText={fieldState.error?.message} {...field} label="اسم العميل" />
+                )}
+              />
 
-          </DialogActions>
+              <Controller
+                name="phoneNumber"
+                control={control}
+                render={({ field }) => (
+                  <TextField {...field} type="number" label="رقم الهاتف" />
+                )}
+              />
+              <Controller
+                name="email"
+
+                control={control}
+                render={({ field }) => (
+                  <TextField helperText='اختياري' {...field} label="البريد الإلكتروني" />
+                )}
+              />
+              <Controller
+                name="address"
+
+                control={control}
+                render={({ field }) => (
+                  <TextField helperText='اختياري'  {...field} label="العنوان" />
+                )}
+              />
+
+            </Box>
+
+            {
+              clientDetails &&
+              <Box mt={4}>
+                <Typography variant="h6">
+                  فواتير العميل
+                </Typography>
+                {
+                  isLoading || isFetching ? <>
+                    <Skeleton height={64} animation="pulse" />
+                    <Skeleton height={64} animation="pulse" />
+                    <Skeleton height={64} animation="pulse" />
+                    <Skeleton height={64} animation="pulse" />
+                  </> :
+                    clientInvoices.length ?
+                      <InvoicesTable invoices={clientInvoices} totalAccount={clientDetails.totalAccount}></InvoicesTable>
+                      : "لايوجد فواتير لهذا العميل"
+                }
+
+              </Box>
+            }
+          </DialogContent>
+
+
+
         </form>
+        <DialogActions >
+          {isModify && (
+            <Button color="error" onClick={() => confirmProvider({
+              message: `سيتم حذف العميل ${clientDetails?.name} بشكل نهائي وجميع البيانات
+                المرتبطة به`,
+              title: 'حذف العميل',
+              onConfirm: async () => { await deleteClient() },
+              onReject: () => { }
+            })}>
+              حذف
+            </Button>
+          )}
+          <Button
+            onClick={() => {
+              onSetOpen(false);
+            }}
+          >
+            الغاء
+          </Button>
+          <Button sx={{ justifySelf: 'flex-end' }} type="submit" variant="contained">حفظ</Button>
+
+        </DialogActions>
       </Dialog>
-
-
 
 
 

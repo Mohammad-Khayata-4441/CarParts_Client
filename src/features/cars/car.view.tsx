@@ -8,11 +8,13 @@ import CarsList from "@/features/cars/components/CarsList";
 import { GetAllCar } from "@/api/Car/dto";
 import {
   Autocomplete,
+  Box,
   Card,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
+  Skeleton,
   TextField,
   Typography,
 } from "@mui/material";
@@ -21,6 +23,7 @@ import { CarApi } from "@/api/Car";
 import { useQuery } from "react-query";
 import { CarActions } from "@/features/cars/car.reducer";
 import NoData from "@/shared/components/NoData";
+import CarsSkeleton from "./cars.skeleton";
 export default function Cars() {
 
   const [filter, setFilter] = useState({
@@ -38,7 +41,7 @@ export default function Cars() {
   );
   const [modifyItem, setModifyItem] = useState<GetAllCar | null>(null);
 
-  useQuery("car", CarApi.fetchCars, {
+  const { isLoading, isFetching } = useQuery("car", CarApi.fetchCars, {
     onSuccess: (data) => {
       dispatch(CarActions.setCarsList(data));
     },
@@ -89,6 +92,7 @@ export default function Cars() {
           </FormControl>
 
           <CarForm
+            showBtn
             carModifyDto={modifyItem}
             onCloseDialog={() => setModifyItem(null)}
           ></CarForm>
@@ -98,15 +102,20 @@ export default function Cars() {
 
       <div className="mt-4">
 
-        {filterdCars.length ?
-          <CarsList
-            onDetails={(car) => {
-              setModifyItem(car);
-            }}
-            carsList={filterdCars}
-          ></CarsList>
-          : <NoData></NoData>
+        {isLoading || isFetching ?
+          <CarsSkeleton /> :
+
+          filterdCars.length ?
+            <CarsList
+              onDetails={(car) => {
+                setModifyItem(car);
+              }}
+              carsList={filterdCars}
+            ></CarsList>
+            : <NoData></NoData>
         }
+
+
 
 
       </div>

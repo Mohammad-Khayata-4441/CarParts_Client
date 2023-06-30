@@ -1,5 +1,6 @@
 import { axiosIns } from "@/app/config/axios/axios";
 import { AddInvoiceDto } from "./AddInvoiceDto";
+import { ClientInvoice } from "./ClientInvoice.dto";
 
 enum InvoiceEndPoints {
   Base = "/Invoice",
@@ -20,7 +21,7 @@ export class InvoiceApi {
   }
 
   static async GetClientAccount(clientId: string) {
-    const { data } = await axiosIns.get<any>(InvoiceEndPoints.GetClientAccount + `${clientId}`)
+    const { data } = await axiosIns.get<ClientInvoice[]>(InvoiceEndPoints.GetClientAccount + `${clientId}`)
     return data;
 
   }

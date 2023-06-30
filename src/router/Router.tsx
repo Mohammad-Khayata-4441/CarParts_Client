@@ -2,6 +2,7 @@ import React, { Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Dashboard from '@/app/layouts/Dashboard/Dashboard'
 import FullScreen from '@/app/layouts/FullScreen'
+import { Box, CircularProgress, Skeleton } from '@mui/material'
 
 const Home = React.lazy(() => import('@/features/home/home.view'))
 const Login = React.lazy(() => import('@/features/auth/login.view'))
@@ -74,7 +75,14 @@ function Router() {
             {routes.map((Ele, i) => (
                 <Route key={i} element={
                     <Ele.layout>
-                        <Suspense fallback={'Loading Some Thing'}>
+                        <Suspense fallback={
+                            <>
+                                <Box mt={24} display={'flex'} alignItems={'center'} justifyContent={'center'}>
+                                <CircularProgress></CircularProgress>
+                                </Box>
+                        
+                            </>
+                        }>
                             <main >
                                 <Ele.name />
 

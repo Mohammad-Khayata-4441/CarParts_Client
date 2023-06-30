@@ -55,7 +55,7 @@ export const darkTheme = createTheme({
 
   palette: {
     mode: 'dark',
-  
+
 
 
 
@@ -93,6 +93,13 @@ export const darkTheme = createTheme({
         sx: {
           border: 'none',
         }
+      }
+    },
+    MuiSkeleton: {
+      styleOverrides:{
+        root:({theme})=>({
+          backgroundColor:theme.palette.background.paper
+        })
       }
     }
   },

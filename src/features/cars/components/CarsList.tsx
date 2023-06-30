@@ -33,11 +33,11 @@ export default function CarsList(props: propsType) {
       props.carsList.map((car) => (
         <Card
           key={car.id}
-          sx={{ borderRadius: "24px 24px 10px 10px", padding: "6px" }}
+          sx={{ borderRadius: "18px 18px 10px 10px", padding: "6px" }}
         >
           {car.image && (
             <CardMedia
-              sx={{ height: "240px", borderRadius: "22px" }}
+              sx={{ height: "240px", borderRadius: "14px" }}
               component="img"
               image={getFileUrl(car.image)}
               alt="green iguana"
@@ -54,7 +54,6 @@ export default function CarsList(props: propsType) {
                 />
               )}
               <Typography
-                className="text-gray-700"
                 fontWeight={600}
                 gutterBottom
                 variant="h6"
