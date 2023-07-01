@@ -20,14 +20,7 @@ import {
   Radio,
   RadioGroup,
   Skeleton,
-  Table,
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableRow,
   TextField,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import { useContext, useEffect, useMemo, useState } from "react";
@@ -51,6 +44,8 @@ export default function ClientForm({
     defaultValues: {
       name: "",
       phoneNumber: "",
+      address: "",
+      email: "",
       isSeller: 0,
     },
   });
@@ -78,9 +73,9 @@ export default function ClientForm({
     }
   }, [isOpen]);
 
-  const { isFetching, isLoading } = useQuery(['client-account'], () => InvoiceApi.GetClientAccount(clientDetails?.id.toString() as string), {
+  const { isFetching, isLoading } = useQuery([`client-account-${clientDetails?.id}`], () => InvoiceApi.GetClientAccount(clientDetails?.id.toString() as string), {
     enabled: isModify,
-    refetchOnWindowFocus:false,
+    refetchOnWindowFocus: false,
     onSuccess: (data) => {
       setclientInvoices(data)
     }
@@ -117,7 +112,7 @@ export default function ClientForm({
               }
             </DialogTitle>
 
-            <IconButton sx={{mx:2}} onClick={() => onSetOpen(false)}>
+            <IconButton sx={{ mx: 2 }} onClick={() => onSetOpen(false)}>
               <Close></Close>
             </IconButton>
 
@@ -167,18 +162,16 @@ export default function ClientForm({
               />
               <Controller
                 name="email"
-
                 control={control}
                 render={({ field }) => (
-                  <TextField helperText='اختياري' {...field} label="البريد الإلكتروني" />
+                  <TextField helperText='اختياري' {...field} value={field.value ?? ""} label="البريد الإلكتروني" />
                 )}
               />
               <Controller
                 name="address"
-
                 control={control}
                 render={({ field }) => (
-                  <TextField helperText='اختياري'  {...field} label="العنوان" />
+                  <TextField helperText='اختياري'  {...field} value={field.value ?? ""} label="العنوان" />
                 )}
               />
 
@@ -208,7 +201,6 @@ export default function ClientForm({
 
 
 
-        </form>
         <DialogActions >
           {isModify && (
             <Button color="error" onClick={() => confirmProvider({
@@ -231,6 +223,8 @@ export default function ClientForm({
           <Button sx={{ justifySelf: 'flex-end' }} type="submit" variant="contained">حفظ</Button>
 
         </DialogActions>
+        </form>
+
       </Dialog>
 
 

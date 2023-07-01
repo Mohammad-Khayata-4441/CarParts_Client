@@ -1,6 +1,7 @@
 import { axiosIns } from "@/app/config/axios/axios";
 import { AddInvoiceDto } from "./AddInvoiceDto";
 import { ClientInvoice } from "./ClientInvoice.dto";
+import { GetAllInvoiceDto } from "./GetAllDto";
 
 enum InvoiceEndPoints {
   Base = "/Invoice",
@@ -9,7 +10,8 @@ enum InvoiceEndPoints {
 
 export class InvoiceApi {
   static async GetAll() {
-    return await axiosIns.get<any[]>(InvoiceEndPoints.Base);
+    const {data} = await axiosIns.get<GetAllInvoiceDto[]>(InvoiceEndPoints.Base);
+    return data
   }
 
   static async CreateInvoice(payload: AddInvoiceDto) {

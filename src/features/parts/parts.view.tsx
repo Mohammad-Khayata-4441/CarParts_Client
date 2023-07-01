@@ -29,17 +29,15 @@ import CreateInvoice from "@/features/invoices/invoice/CreateInvoice";
 import { ClientItem } from "@/api/Client/GetAll";
 import { ClientApi } from "@/api/Client";
 import { useParams, useSearchParams } from "react-router-dom";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import NoData from "@/shared/components/NoData";
 import { InvoiceType } from "../invoices/enums/InvoiceType";
+import TableSkeleton from "@/shared/components/TableSkeleton";
 
 function Products() {
   const [carsList, setCarsList] = useState<GetAllCar[]>([]);
   const [categoriesList, setcategoriesList] = useState<CategoryItem[]>([]);
   const [warehouseList, setWarehouseList] = useState<WarehouseItem[]>([]);
   const [brandsList, setBrandsList] = useState<BrandItem[]>([]);
-  const [parts, setParts] = useState<PartItem[]>([]);
-
   const [customers, setCustomers] = useState<ClientItem[]>([]);
   const [partsToInvoice, setPartsToInvoice] = useState<PartItem[]>([]);
   const [invoiceDialog, setInvoiceDialog] = useState(false);
@@ -56,14 +54,15 @@ function Products() {
   const [invoiceType, setInvoiceType] = useState(InvoiceType.SellInvoice);
 
 
-  const { refetch } = useQuery(
+  const { refetch, isLoading, isFetching, data: partsData } = useQuery(
     ["part"],
     () => PartApi.getParts(params),
+    
     {
       onSuccess(data) {
-        setParts(data.parts);
         setTotal(data.totalNumber);
       },
+      
     }
   );
 
@@ -89,10 +88,10 @@ function Products() {
     }
   );
 
-  const handleGenerateInvoice = (data: PartItem[], inType:InvoiceType) => { 
+  const handleGenerateInvoice = (data: PartItem[], inType: InvoiceType) => {
     showInvoiceDialog(data)
     setInvoiceType(inType)
-  
+
   }
 
   const brandQuery = useQuery<BrandItem[]>("brands", BrandApi.fetchBrands, {
@@ -187,16 +186,19 @@ function Products() {
       ></CreateInvoice>
 
       {
-        parts.length ?
-          <PartsTable
-            onGenerateInvoice={handleGenerateInvoice}
-            page={params.PageNumber}
-            onPageChange={onPaginationChage}
-            rows={parts}
-            rowsPerPage={params.PageSize}
-            totalCount={total}
-          />
-          : <NoData />
+
+        isLoading ? <TableSkeleton></TableSkeleton> :
+
+        partsData?.parts.length ?
+            <PartsTable
+              onGenerateInvoice={handleGenerateInvoice}
+              page={params.PageNumber}
+              onPageChange={onPaginationChage}
+              rows={partsData.parts}
+              rowsPerPage={params.PageSize}
+              totalCount={total}
+            />
+            : <NoData />
 
       }
 

@@ -21,21 +21,21 @@ import {
   Box,
 } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
-import { FaBuilding, FaStore, FaUser } from "react-icons/fa";
+import {  FaStore, FaUser } from "react-icons/fa";
 import ClientForm from "@/features/clients/components/ClientForm";
 import { ClientItem } from "@/api/Client/GetAll";
 
 function Clients() {
   const queryClient = useQueryClient();
   const [clientToModify, setClientToModify] = useState<ClientItem | null>(null);
-  const { data, refetch } = useQuery(["clients"], ClientApi.fetchClients);
+  const { data } = useQuery(["client"], ClientApi.fetchClients);
   const [showClientModal, setClientModal] = useState(false);
   return (
     <div>
       <ClientForm
         clientDetails={clientToModify}
         onSubmit={() => {
-          queryClient.invalidateQueries("clients");
+          queryClient.invalidateQueries("client");
         }}
         isOpen={showClientModal}
         onSetOpen={(nv) => {

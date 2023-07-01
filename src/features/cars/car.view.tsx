@@ -23,7 +23,7 @@ import { CarApi } from "@/api/Car";
 import { useQuery } from "react-query";
 import { CarActions } from "@/features/cars/car.reducer";
 import NoData from "@/shared/components/NoData";
-import CarsSkeleton from "./cars.skeleton";
+import CarsSkeleton from "./components/CarsSkeleton";
 export default function Cars() {
 
   const [filter, setFilter] = useState({
