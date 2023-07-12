@@ -25,7 +25,7 @@ import { WarehouseItem } from "@/api/Warehouse/dto";
 import { GetAllPartsParams, PartItem } from "@/api/Part/GetAllDto";
 import { BrandApi } from "@/api/Brand";
 import { Refresh } from "@mui/icons-material";
-import CreateInvoice from "@/features/invoices/invoice/CreateInvoice";
+import CreateInvoice from "@/features/invoices/components/CreateInvoice";
 import { ClientItem } from "@/api/Client/GetAll";
 import { ClientApi } from "@/api/Client";
 import { useParams, useSearchParams } from "react-router-dom";

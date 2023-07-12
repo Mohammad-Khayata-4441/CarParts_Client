@@ -15,6 +15,12 @@ export const store = configureStore({
 });
 
 
+type x = {name:string ,phone:number}
+type y = {username:string ,mobile:number}
+
+type z = x&y
+
+
 export type RootState = ReturnType<typeof store.getState>
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch

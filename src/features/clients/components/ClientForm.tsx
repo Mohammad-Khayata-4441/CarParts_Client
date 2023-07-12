@@ -3,7 +3,7 @@ import { CreateClient } from "@/api/Client/CreateClient";
 import { ClientItem } from "@/api/Client/GetAll";
 import { InvoiceApi } from "@/api/Invoice";
 import { ClientInvoice } from "@/api/Invoice/ClientInvoice.dto";
-import InvoicesTable from "@/features/invoices/invoice/InvoicesTable";
+import InvoicesTable from "@/features/invoices/components/InvoicesTable";
 import { ConfirmContext } from "@/shared/components/FeedBackProvider";
 import { Close } from "@mui/icons-material";
 import {

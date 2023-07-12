@@ -1,29 +1,29 @@
 import { ClientApi } from "@/api/Client";
-import { Box, Button, Card, Typography } from "@mui/material";
-import { useState } from "react";
+import { Box, Button, Card, CardActions, Pagination, Typography } from "@mui/material";
+import { useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
-import InvoicesTable from "./invoice/InvoicesTable";
+import InvoicesTable from "./components/InvoicesTable";
 import { InvoiceApi } from "@/api/Invoice";
 import { InvoiceType, InvoiceTypeLabels } from "./enums/InvoiceType";
 import { GetAllInvoiceDto } from "@/api/Invoice/GetAllDto";
 import NoData from "@/shared/components/NoData";
 import TableSkeleton from '@/shared/components/TableSkeleton'
-import CreateInvoice from "./invoice/CreateInvoice";
+import CreateInvoice from "./components/CreateInvoice";
 import { AddInvoiceDto } from "@/api/Invoice/AddInvoiceDto";
 import { toast } from "react-toastify";
 function Invoces() {
-  const [invoices, setInvoices] = useState<GetAllInvoiceDto[]>([]);
+  const [pageSize, setpageSize] = useState(10)
+  const [pageNumber, setpageNumber] = useState<number>(1)
   const [invoiceType, setInvoiceType] = useState<InvoiceType>(InvoiceType.IncomingPayment);
   const [invoiceDialog, setInvoiceDialog] = useState(false)
   const { data: clients } = useQuery(["clients"], ClientApi.fetchClients);
   const queryClient = useQueryClient()
-  const { isLoading, isFetching } = useQuery({
+  const { isLoading, data: invoices = [] } = useQuery({
     queryFn: InvoiceApi.GetAll,
     queryKey: "invoice",
-    onSuccess: (data) => {
-      setInvoices(data)
-    },
+    initialData: [],
   });
+  const paginatedData = useMemo(() => invoices.slice((pageNumber - 1) * pageSize, pageNumber * pageSize), [invoices , pageSize, pageNumber])
 
 
   const createInvoice = (type: InvoiceType) => {
@@ -54,19 +54,23 @@ function Invoces() {
         </Box>
 
 
-        <CreateInvoice onSubmit={ onCreateNewInvoice } parts={[]} customers={clients ?? []} invoiceType={invoiceType} is={invoiceDialog} onClose={() => setInvoiceDialog(false)}></CreateInvoice>
+        <CreateInvoice onSubmit={onCreateNewInvoice} parts={[]} customers={clients ?? []} invoiceType={invoiceType} is={invoiceDialog} onClose={() => setInvoiceDialog(false)}></CreateInvoice>
       </Card>
 
 
       {
-        isLoading || isFetching ? <TableSkeleton></TableSkeleton> :
+        isLoading ? <TableSkeleton></TableSkeleton> :
           <Card>
             {
-              invoices.length ?
-                <InvoicesTable clients={clients} invoices={invoices} ></InvoicesTable>
+              invoices?.length ?
+                <InvoicesTable clients={clients} invoices={paginatedData} ></InvoicesTable>
                 : <NoData></NoData>
             }
 
+
+            <CardActions>
+              <Pagination page={pageNumber} onChange={(e, pageNumber) => setpageNumber(pageNumber)} count={Math.ceil(invoices.length / pageSize)}></Pagination>
+            </CardActions>
           </Card>
       }
     </div>

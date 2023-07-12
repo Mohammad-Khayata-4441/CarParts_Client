@@ -102,7 +102,7 @@ export default function Cars() {
 
       <div className="mt-4">
 
-        {isLoading || isFetching ?
+        {isLoading ?
           <CarsSkeleton /> :
 
           filterdCars.length ?

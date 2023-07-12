@@ -82,7 +82,7 @@ export default function Warehouse() {
             {
               warehouseList.map(wh => <TableRow key={wh.id}>
                 <TableCell>
-                  <img className='h-12 rounded' src='https://mecaluxcom.cdnwm.com/blog/img/warehouse-storage-techniques.1.1.jpg'></img>
+                  <img alt="" className='h-12 rounded' src='https://mecaluxcom.cdnwm.com/blog/img/warehouse-storage-techniques.1.1.jpg' />
                 </TableCell>
                 <TableCell>{wh.name}</TableCell>
                 <TableCell>{wh.location}</TableCell>
